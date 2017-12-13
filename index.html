@@ -17,18 +17,41 @@
 	<!-- Link to custom style sheet -->
 	<link rel="stylesheet" href="assets/css/style.css">
 
+	<!-- Link to custom maps sheet -->
+	<link rel="stylesheet" href="assets/css/maps.css">
+
 	<title>Breadcrumbs</title>
 
 </head>
 
 <body>
 
+	<div id="map"></div>
+		
+	<div id="crumbDiv">
+		Latitude<br>
+		<input type="text" id="lat" name="latitude"><br>
+		Longitude<br>
+		<input type="text" id="lng" name="longitude"><br>
+		<button type="button" id="crumbInput" value="Submit" onclick="submitCrumb()">Submit</button>
+	</div>
+
+	<div id="crumbFormMsg"></div>
+
+	<!-- Script link for Firebase -->
+	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 
 	<!-- Script link for JQuery 3.2.1 -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	
+
 	<!-- Script link for custom app.js -->
 	<script src="assets/javascript/app.js"></script>
+
+	<!-- Script link to custom maps.js -->
+	<script src="assets/javascript/maps.js"></script>
+
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP-L5yrIk6bJyMy2Nk_vkQlxkqEvgXQcI&callback=initMap"></script>
 
 </body>
 
