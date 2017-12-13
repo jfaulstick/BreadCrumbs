@@ -9,4 +9,7 @@ messagingSenderId: "769979061333"
 };
 
 firebase.initializeApp(config);
+
+var db = firebase.database();
+
 console.log("Firebase initialized");

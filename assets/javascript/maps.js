@@ -1,5 +1,8 @@
-var map, infoWindow;
+var map;
+var infoWindow;
+var crumbCounter;
 
+// Function that initializes the map
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: -34.397, lng: 150.644},
@@ -8,7 +11,7 @@ function initMap() {
 
 infoWindow = new google.maps.InfoWindow;
 
-// Get browser Geolocation
+	// Get browser Geolocation
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			// Set position to the browser's location
@@ -43,6 +46,20 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.open(map);
 }
 
+// Adds new breadcrumb to breadcrumbList object in Firebase
+function addCrumb(lat, lng) {
+	var breadcrumb = {
+		lat: lat,
+		lng: lng
+	};
+
+	// Setting index value for new crumb
+	var crumbIndex = crumbCounter - 1;
+
+	db.ref('breadcrumbList/' + crumbIndex).set(breadcrumb);
+}
+
+// Submits a new breadcrumb. Currently off of a Submit button with values from two <divs>
 function submitCrumb() {
 	var lat = $("#lat").val().trim();
 	var lng = $("#lng").val().trim();
@@ -51,12 +68,22 @@ function submitCrumb() {
 		$("#crumbFormMsg").text("All fields must have proper values inputted.");
 	}
 	else {
+		
+		crumbCounter++;
+
+		// Calls function to add the crumb to Firebase
+		addCrumb(lat, lng);
+
 		console.log("Form test successful!");
 		console.log("Adding a new breadcrumb at Lat: " + lat + " / " + lng);
 		$("#crumbFormMsg").empty();
 	}
-
 }
+
+db.ref('breadcrumbList').on("value", function(snapshot) {
+	crumbCounter = snapshot.numChildren();
+	console.log("There are " + crumbCounter + "total breadcrumbs.");
+});
 
 
 
