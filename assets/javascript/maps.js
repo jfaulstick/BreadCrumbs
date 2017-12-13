@@ -50,8 +50,12 @@ function submitCrumb() {
 	if (lat == "" || lng == "") {
 		$("#crumbFormMsg").text("All fields must have proper values inputted.");
 	}
-	console.log("Form test successful!");
-	console.log("Adding a new breadcrumb at Lat: " + lat + " / " + lng);
+	else {
+		console.log("Form test successful!");
+		console.log("Adding a new breadcrumb at Lat: " + lat + " / " + lng);
+		$("#crumbFormMsg").empty();
+	}
+
 }
 
 
