@@ -1,6 +1,8 @@
 var map;
 var infoWindow;
-var crumbCounter;
+var crumbList = new Array();
+var crumbsToShow = 10;
+var markersArray = [];
 
 // Function that initializes the map
 function initMap() {
@@ -27,10 +29,18 @@ infoWindow = new google.maps.InfoWindow;
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
 		});
-	} else {
+	} 
+	else {
 		// Browser doesn't support Geolocation
-	handleLocationError(false, infoWindow, map.getCenter());
+		handleLocationError(false, infoWindow, map.getCenter());
 	}
+}
+
+function clearOverlays() {
+	for (i = 0; i < markersArray.length; i++) {
+		markersArray[i].setMap(null);
+	}
+	markersArray.length = 0;
 }	
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -48,10 +58,20 @@ function addCrumb(lat, lng) {
 		lng: lng
 	};
 
-	// Setting index value for new crumb
-	var crumbIndex = crumbCounter - 1;
+	// If there are fewer index entries than the variable crumbsToShow, just add the new breadcrumb
+	if (!crumbList) {
+		crumbList = new Array(breadcrumb);
+	}
+	else if (crumbList.length < crumbsToShow) {
+		crumbList.push(breadcrumb); 
+	}
+	// If number of index entries is equal or greater than crumbsToShow, remove the first entry and then add the new breadcrumb
+	else {
+		crumbList.shift();
+		crumbList.push(breadcrumb);
+	}
 
-	db.ref('breadcrumbList/' + crumbIndex).set(breadcrumb);
+	db.ref('breadcrumbList').set(crumbList);
 }
 
 // Adds a new map marker to the map
@@ -64,6 +84,7 @@ function addMarker(lat, lng) {
 		map: map,
 		title: 'Breadcrumb'
 	});
+	markersArray.push(marker);
 }
 
 // Submits a new breadcrumb. Currently off of a Submit button with values from two <divs>
@@ -73,11 +94,8 @@ function submitCrumb() {
 
 	if (lat == "" || lng == "") {
 		$("#crumbFormMsg").text("All fields must have proper values inputted.");
-	}
+	} 
 	else {
-		
-		crumbCounter++;
-
 		// Calls function to add the crumb to Firebase
 		addCrumb(lat, lng);
 
@@ -89,37 +107,22 @@ function submitCrumb() {
 
 // At Launch or when breadcrumbList is updated, adds marker for each of last 10 breadcrumbs
 db.ref('breadcrumbList').on("value", function(snapshot) {
-	crumbCounter = snapshot.numChildren();
+	crumbList = snapshot.val();
+	clearOverlays();
 	
 	if (snapshot.exists()) {
-		var crumbList = snapshot.val();
 		console.log("There are " + crumbList.length + " total breadcrumbs.");
 		console.log(crumbList);
 
-		var totalCrumbs = crumbList.length;
-
-		// If there are more than 10 breadcrumbs in breadcrumbList on Firebase
-		if (totalCrumbs > 10) {
-			// Set the amount of breadcrumbs we will show to 10
-			var crumbsToShow = 10;
-			// Sets the starting object index to the total length - 10
-			var startIndex = totalCrumbs - crumbList.length;
-		}
-		// If there are 10 or less breadcrumbs in breadcrumbList on Firebase
-		else {
-			// Set the amount of breadcrumbs to the number in Firebase
-			crumbsToShow = totalCrumbs;
-			// Set the starting object index to 0
-			startIndex = 0;
-		}
-
-		for (i = 0; i < crumbsToShow; i++) {
-			var lat = parseFloat(snapshot.child(startIndex + "/lat").val());
-			var lng = parseFloat(snapshot.child(startIndex + "/lng").val());
+		for (i = 0; i < crumbList.length; i++) {
+			var lat = crumbList[i].lat;
+			var lng = crumbList[i].lng;
 			addMarker(lat, lng);
-			startIndex++;
-			console.log("Adding breadcrumb at index " + i + " at Lat: " + lat + " / Lng: " + lng);
+			console.log("Adding breadcrumb in index " + i + " at Lat: " + lat + " / Lng: " + lng);
 		}
 	}
 
 });
+
+// Need to add management for only showing the last 10 markers in real time, not just at load.
+// Need to figure out why it is adding a blank index
