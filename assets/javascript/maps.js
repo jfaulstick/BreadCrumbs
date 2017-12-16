@@ -3,6 +3,7 @@ var infoWindow;
 var crumbList = new Array();
 var crumbsToShow = 10;
 var markersArray = [];
+var pos = {};
 
 // Function that initializes the map
 function initMap() {
@@ -17,7 +18,7 @@ infoWindow = new google.maps.InfoWindow;
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition( function(position) {
 			// Set position to the browser's location
-			var pos = {
+			pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
 			};
@@ -45,6 +46,10 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.open(map);
 }
 
+function mapCenter() {
+	map.setCenter(pos);
+}
+
 function logLocation(lat, lng) {
 	console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
 }
@@ -54,15 +59,21 @@ function getLocation() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition( function(position) {
 			// Set position to the browser's location
-			var pos = {
+			pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
 			};
 
 			logLocation(pos.lat, pos.lng);
-
-			return pos;
+			console.log(pos);
+			// return pos;
+		}, function() {
+			handleLocationError(true, infoWindow, map.getCenter());
 		});
+	}
+	else {
+		// Browser doesn't support Geolocation
+		handleLocationError(false, infoWindow, map.getCenter());
 	}
 }
 
@@ -102,6 +113,8 @@ function addCrumb(lat, lng) {
 	}
 
 	db.ref('breadcrumbList').set(crumbList);
+
+	console.log("New breadcrumb added " + breadcrumb);
 }
 
 // Adds a new map marker to the map
@@ -117,8 +130,16 @@ function addMarker(lat, lng) {
 	markersArray.push(marker);
 }
 
-// Submits a new breadcrumb. Currently off of a Submit button with values from two <divs>
-$("#crumbInput").on("click", function() {
+// Submits a new breadcrumb at the device's geolocation
+$("#autoCrumbInput").on("click", function() {
+	getLocation();
+
+	addCrumb(pos.lat, pos.lng);
+	console.log("New auto breadcrumb added at Lat: " + lat + " / Lng " + lng);
+})
+
+// Submits a new breadcrumb with lat / lng manually entered in a form
+$("#manualCrumbInput").on("click", function() {
 	var lat = parseFloat($("#lat").val().trim());
 	var lng = parseFloat($("#lng").val().trim());
 
@@ -129,11 +150,10 @@ $("#crumbInput").on("click", function() {
 		// Calls function to add the crumb to Firebase
 		addCrumb(lat, lng);
 
-		console.log("Form test successful!");
-		console.log("Adding a new breadcrumb at Lat: " + lat + " / " + lng);
+		console.log("New manual breadcrumb at Lat: " + lat + " / Lng " + lng);
 		$("#crumbFormMsg").empty();
 	}
-}
+});
 
 // At Launch or when breadcrumbList is updated, adds marker for each of last 10 breadcrumbs
 db.ref('breadcrumbList').on("value", function(snapshot) {
