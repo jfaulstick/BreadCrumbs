@@ -93,7 +93,7 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 	
 	if (snapshot.exists()) {
 		var crumbList = snapshot.val();
-		console.log("There are " + crumbList.length + "total breadcrumbs.");
+		console.log("There are " + crumbList.length + " total breadcrumbs.");
 		console.log(crumbList);
 
 		var totalCrumbs = crumbList.length;
@@ -123,8 +123,3 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 	}
 
 });
-
-
-
-
-

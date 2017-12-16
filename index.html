@@ -5,22 +5,28 @@
 	<meta charset="utf-8">
 	<title>| BreadCrumbs</title>
 
+	<!-- Link to reset.css -->
+	<link rel="stylesheet" href="assets/css/reset.css">
+
 	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Link to style.css -->
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<!-- Link to maps.css -->
+	<link rel="stylesheet" href="assets/css/maps.css">
 
 	<!-- link to JQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
 	<!-- Link to Firebase  -->
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 
-	
 </head>
 <body>
 
 <div class="container">
-	
 
 <!-- Row 1: -->
 	<div class="row">
@@ -30,27 +36,29 @@
 					<h3 class="panel-title">Sign Up</h3>
 				</div>
 
-					<div class="panel-body">
-						<form>
-							<div class="form-group">
-								<label for="users-email">Email:</label>
-								<br>
-								<input type="text" id="userEmail">
-							</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<label for="users-email">Email:</label>
+							<br>
+							<input type="text" id="userEmail">
+						</div>
 
-							<div class="form-group">
-								<label for="users-password">Password:</label>
-								<br>
-								<input type="password" id="userPassword">
-							</div>
+						<div class="form-group">
+							<label for="users-password">Password:</label>
+							<br>
+							<input type="password" id="userPassword">
+						</div>
 
-							<button type="submit" class="btn btn-default" id="user-SignUp">Submit</button>
-						</form>
-					</div>
-			</div>	
+						<button type="submit" class="btn btn-default" id="user-SignUp">Submit</button>
+					</form>
+				</div>
+
+			</div>
+		</div>	
 	</div>
     
-  <div id="map"></div>
+    <div id="map"></div>
 		
 	<div id="crumbDiv">
 		Latitude<br>
@@ -61,6 +69,8 @@
 	</div>
 
 	<div id="crumbFormMsg"></div>
+
+</div>
 
 	<!-- Script link for Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
@@ -75,7 +85,7 @@
 	<script src="assets/javascript/maps.js"></script>
 
 	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP-L5yrIk6bJyMy2Nk_vkQlxkqEvgXQcI&callback=initMap"></script>
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP-L5yrIk6bJyMy2Nk_vkQlxkqEvgXQcI&callback=initMap"></script>
 
 </body>
-  </html>
+</html>
