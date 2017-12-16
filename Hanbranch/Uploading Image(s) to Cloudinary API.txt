@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Posting photos to Cloudinary API</title>
+
+  <!--Link to or Insert Java Script -->
+  <script src="  ">  </script>  
+
+
+  <!--Link to  jQuery--> 
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+  <script> 
+$('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {  
+  $('.preview').html(
+    $.cloudinary.image(data.result.public_id, 
+      { format: data.result.format, version: data.result.version, 
+        crop: 'fill', width: 250, height: 200 })
+  );    
+  $('.image_public_id').val(data.result.public_id);    
+  return true;
+});
+
+
+  </script>
+  
+</head>
+
+<body>
+   
+  <form method = POST action=  https://api.cloudinary.com/v1_1/dlblr75zv/image/upload  >  
+	<div> <img> type = place holder style = csss; user Upload Image </img> 
+
+    
+   <textarea name = "Comments" type= text cols= "10" length = "1000"> What did you find? </textarea>
+  
+
+  var a = $("<button = submit>");  This code $("<button>") // Creating button in jQuery needs to create the start and end tag // 
+          
+  <!--I'd make the submit button function later using jQuery .ajax-->  
+   function submit() {  
+
+ {
+        <form method = POST action=  https://api.cloudinary.com/v1_1/dlblr75zv/image/upload  >  
+	<div> <img type = place holder style = style.css>user Upload Image </img> 
+          
+          
+ } 
+      }
+ 
+
+  </div>   
+ </form>
+</body>
+
+
+</html>  
