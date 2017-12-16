@@ -9,12 +9,12 @@
 //  ===========================================================================
   // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyAWBH0WwUAruaTjaHGkJA51COcfO00TKGo",
-    authDomain: "breadcrumbs-98358.firebaseapp.com",
-    databaseURL: "https://breadcrumbs-98358.firebaseio.com",
-    projectId: "breadcrumbs-98358",
-    storageBucket: "breadcrumbs-98358.appspot.com",
-    messagingSenderId: "320278007810"
+    apiKey: "AIzaSyCXu6muve1SKZFE9W0x7hvz3H_rmCJtgsQ",
+    authDomain: "breadcrumbs-1513133131724.firebaseapp.com",
+    databaseURL: "https://breadcrumbs-1513133131724.firebaseio.com",
+    projectId: "breadcrumbs-1513133131724",
+    storageBucket: "breadcrumbs-1513133131724.appspot.com",
+    messagingSenderId: "769979061333"
   };
   firebase.initializeApp(config);
 
