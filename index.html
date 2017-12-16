@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 
-<html lang="en-us">
-
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
+	<title>| BreadCrumbs</title>
+
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- link to JQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+	<!-- Link to Firebase  -->
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
 	
-	<!-- Set viewpoint to device width -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<!-- Resets browser specific styling -->
-	<link rel="stylesheet" href="assets/css/reset.css">
-
-	<!-- stylesheet link to Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	
-	<!-- Link to custom style sheet -->
-	<link rel="stylesheet" href="assets/css/style.css">
-
-	<!-- Link to custom maps sheet -->
-	<link rel="stylesheet" href="assets/css/maps.css">
-
-	<title>Breadcrumbs</title>
-
 </head>
-
 <body>
 
-	<div id="map"></div>
+<div class="container">
+	
+
+<!-- Row 1: -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Sign Up</h3>
+				</div>
+
+					<div class="panel-body">
+						<form>
+							<div class="form-group">
+								<label for="users-email">Email:</label>
+								<br>
+								<input type="text" id="userEmail">
+							</div>
+
+							<div class="form-group">
+								<label for="users-password">Password:</label>
+								<br>
+								<input type="password" id="userPassword">
+							</div>
+
+							<button type="submit" class="btn btn-default" id="user-SignUp">Submit</button>
+						</form>
+					</div>
+			</div>	
+	</div>
+    
+  <div id="map"></div>
 		
 	<div id="crumbDiv">
 		Latitude<br>
@@ -54,5 +78,4 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP-L5yrIk6bJyMy2Nk_vkQlxkqEvgXQcI&callback=initMap"></script>
 
 </body>
-
-</html>
+  </html>
