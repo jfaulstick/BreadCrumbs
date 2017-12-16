@@ -15,16 +15,17 @@ infoWindow = new google.maps.InfoWindow;
 
 	// Get browser Geolocation
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
+		navigator.geolocation.getCurrentPosition( function(position) {
 			// Set position to the browser's location
 			var pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
 			};
 
-			// infoWindow.setPosition(pos);
-			// infoWindow.setContent('Location found.');
-			// infoWindow.open(map);
+			logLocation(pos.lat, pos.lng);
+
+			infoWindow.setPosition(pos);
+
 			map.setCenter(pos);
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -33,6 +34,35 @@ infoWindow = new google.maps.InfoWindow;
 	else {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
+	}
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(browserHasGeolocation ?
+		'Error: The Geolocation service failed.' :
+		'Error: Your browser doesn\'t support geolocation.');
+	infoWindow.open(map);
+}
+
+function logLocation(lat, lng) {
+	console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
+}
+
+function getLocation() {
+	// Get browser Geolocation
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition( function(position) {
+			// Set position to the browser's location
+			var pos = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			};
+
+			logLocation(pos.lat, pos.lng);
+
+			return pos;
+		});
 	}
 }
 
@@ -88,7 +118,7 @@ function addMarker(lat, lng) {
 }
 
 // Submits a new breadcrumb. Currently off of a Submit button with values from two <divs>
-function submitCrumb() {
+$("#crumbInput").on("click", function() {
 	var lat = parseFloat($("#lat").val().trim());
 	var lng = parseFloat($("#lng").val().trim());
 
@@ -123,6 +153,3 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 	}
 
 });
-
-// Need to add management for only showing the last 10 markers in real time, not just at load.
-// Need to figure out why it is adding a blank index
