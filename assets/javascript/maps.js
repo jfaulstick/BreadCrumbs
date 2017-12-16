@@ -113,8 +113,6 @@ function addCrumb(lat, lng) {
 	}
 
 	db.ref('breadcrumbList').set(crumbList);
-
-	console.log("New breadcrumb added " + breadcrumb);
 }
 
 // Adds a new map marker to the map
