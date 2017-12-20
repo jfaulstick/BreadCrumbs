@@ -7,60 +7,139 @@
 // Section 2:
 // Firebase CDN
 //  ===========================================================================
-  // Initialize Firebase
+ // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyCXu6muve1SKZFE9W0x7hvz3H_rmCJtgsQ",
-    authDomain: "breadcrumbs-1513133131724.firebaseapp.com",
-    databaseURL: "https://breadcrumbs-1513133131724.firebaseio.com",
-    projectId: "breadcrumbs-1513133131724",
-    storageBucket: "breadcrumbs-1513133131724.appspot.com",
-    messagingSenderId: "769979061333"
+    apiKey: "AIzaSyAWBH0WwUAruaTjaHGkJA51COcfO00TKGo",
+    authDomain: "breadcrumbs-98358.firebaseapp.com",
+    databaseURL: "https://breadcrumbs-98358.firebaseio.com",
+    projectId: "breadcrumbs-98358",
+    storageBucket: "breadcrumbs-98358.appspot.com",
+    messagingSenderId: "320278007810"
   };
   firebase.initializeApp(config);
+  
 
 var db = firebase.database();
 var auth = firebase.auth();
+var user = firebase.auth().currentUser;
 
 
 // Section 3:
 // functions
 // =============================================================================
-// When the user clicks the submit button..
+
+// When the user clicks the registration button..
+$("#register_Me").on("click", function(){
+	$("#registration-Row").show();
+	$("#login-Row").hide();
+
+})
+
+// 
+// LOGIN USER
+// When the user clicks the login button in the login form..
+$("#user-Login").on("click", function(event){
+	// Prevent default browser form behavior
+	event.preventDefault();
+
+	var loginEmail = $("#loginEmail").val().trim();
+	var loginPassword = $("#loginPassword").val().trim();
+
+	// testing and debugging
+	console.log("Email " + loginEmail);
+	console.log("Password " + loginPassword);
+
+	// pass user login info to firebase
+	firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword).catch(function(error) {
+	  // Handle Errors here.
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+	  console.log(errorCode);
+	  console.log(errorMessage);
+});
+
+	// show the current logged in user when use logs in
+	if (user) {
+		console.log(user);
+	} else {
+		console.log("No user is signed in");
+	}
+
+});
+
+// 
+// CREATE USER:
+// When the user clicks the submit button in the registration form..
 $("#user-SignUp").on("click", function(event){
 	// prevent default behavior
 	event.preventDefault();
 
 	// grab the users form information and save to variables
+	var userName = $("#userName").val().trim();
 	var userEmail = $("#userEmail").val().trim();
 	var userPassword = $("#userPassword").val().trim();
 
 	// tests and debugging
+	console.log(userName);
 	console.log(userEmail);
 	console.log(userPassword);
 
 	// Tempory JSON variable to hold the user information
-	// var newUser = {
-	// 	email: userEmail,
-	// 	password: userPassword
-	// };
+	var newUser = {
+		name: userName,
+		email: userEmail
+	};
 
 	// send user login information to firebase
-	// db.ref("/users").push(newUser);
+	db.ref("/users").push(newUser);
+	// Create user in firebase authentication
 	auth.createUserWithEmailAndPassword(userEmail, userPassword);
 
 	// Firebase tests and debugging
-	// console.log(newUser.email);
-	// console.log(newUser.password);
+	console.log(newUser.name);
+	console.log(newUser.email);
+	
+	// Use firebase authentication listner to show current logged in user
+	auth.onAuthStateChanged(function(user){
+		if (user) {
+			console.log("You are signed in");
+			console.log(user);
+		} else {
+			console.log("Your are not signed in");
+			console.log("Please log in");
+		}
+	})
+
 
 	// alert user of signUp
 	alert("Account successfully added!")
 
 	// clear the form
+	$("#userName").val("");
 	$("#userEmail").val("");
 	$("#userPassword").val("");
+
+	// Show logout button when user logs in
+	$("#user-Logout").show();
+});
+
+// 
+// USER LOGOUT:
+// When the user clicks the logout button
+$("#user-Logout").on("click", function(){
+	auth.signOut().then(function() {
+		console.log("Sign-out successful.");
+	}).catch(function(error){
+		console.log("An error has occured when logging out.");
+		console.log(error);
+	})
 });
 
 
 // Section 4:
 // Main process
 // ================================================================================
+// Hide the registration form from view
+$("#registration-Row").hide();
+// Hide the logout button
+// $("#user-Logout").hide();
