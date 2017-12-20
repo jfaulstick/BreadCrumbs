@@ -1,15 +1,20 @@
 var map;
 var infoWindow;
+// Array to hold the list of breadcrumbs
 var crumbList = new Array();
+// Configurable value to control how many breadcrumbs are shown
 var crumbsToShow = 10;
+// Array to hold the google map markers
 var markersArray = [];
+// Array for handling the user's position
 var pos = {};
 
 // Function that initializes the map
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: -34.397, lng: 150.644},
-		zoom: 6
+		zoom: 6,
+		streetViewControl: false
 });
 
 infoWindow = new google.maps.InfoWindow;
@@ -38,14 +43,7 @@ infoWindow = new google.maps.InfoWindow;
 	}
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-	infoWindow.setPosition(pos);
-	infoWindow.setContent(browserHasGeolocation ?
-		'Error: The Geolocation service failed.' :
-		'Error: Your browser doesn\'t support geolocation.');
-	infoWindow.open(map);
-}
-
+// Centers the map
 function mapCenter() {
 	map.setCenter(pos);
 }
@@ -54,6 +52,7 @@ function logLocation(lat, lng) {
 	console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
 }
 
+// Updates variable pos with the user's current geolocation coordinates
 function getLocation() {
 	// Get browser Geolocation
 	if (navigator.geolocation) {
@@ -77,6 +76,7 @@ function getLocation() {
 	}
 }
 
+// Removes the markers stored in markersArray from the map.
 function clearOverlays() {
 	for (i = 0; i < markersArray.length; i++) {
 		markersArray[i].setMap(null);
@@ -84,6 +84,7 @@ function clearOverlays() {
 	markersArray.length = 0;
 }	
 
+// Creates an error window if geolocation fails or the browser does not support geolocation
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.setPosition(pos);
 	infoWindow.setContent(browserHasGeolocation ?
