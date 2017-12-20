@@ -56,11 +56,11 @@
 		
 	<div id="crumbDiv">
 		<div class="row">
-			<div id="auto-breadcrumb">
+			<div class="col-lg-12" id="auto-breadcrumb">
 				<h3>Auto Crumb Entry</h3>
 				<button type="button" id="autoCrumbInput" value="Add BreadCrumb">Submit</button>
 			</div>
-			<div id="manual-breadcrumb">
+			<div class="col-lg-12" id="manual-breadcrumb">
 				<h3>Manual Crumb Entry</h3>
 				Latitude<br>
 				<input type="text" id="lat" name="latitude"><br>
@@ -72,6 +72,14 @@
 	</div>
 
 	<div id="crumbFormMsg"></div>
+
+	<div class="row">
+		<form method=POST action="">
+			<div class="col-lg-12" id="cloud-upload">
+				<input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data="..." ></input>
+			</div>
+		</form>
+	</div>
 
 </div>
 
@@ -89,8 +97,6 @@
 
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP-L5yrIk6bJyMy2Nk_vkQlxkqEvgXQcI&callback=initMap"></script>
-
-	<script src="node_modules/jquery/dist/jquery.js" type="text/javascript"></script>
 
 	<script src="node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
 
