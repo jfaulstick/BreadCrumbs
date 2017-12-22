@@ -1,0 +1,89 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cloudinary-jquery-file-upload",
+        "scope": null,
+        "escapedName": "cloudinary-jquery-file-upload",
+        "name": "cloudinary-jquery-file-upload",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "D:\\Coursework\\code\\Class Projects\\BreadCrumbs"
+    ]
+  ],
+  "_from": "cloudinary-jquery-file-upload@latest",
+  "_id": "cloudinary-jquery-file-upload@2.4.0",
+  "_inCache": true,
+  "_location": "/cloudinary-jquery-file-upload",
+  "_nodeVersion": "8.9.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cloudinary-jquery-file-upload-2.4.0.tgz_1512898024410_0.4184824691619724"
+  },
+  "_npmUser": {
+    "name": "cloudinary",
+    "email": "info@cloudinary.com"
+  },
+  "_npmVersion": "5.5.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cloudinary-jquery-file-upload",
+    "scope": null,
+    "escapedName": "cloudinary-jquery-file-upload",
+    "name": "cloudinary-jquery-file-upload",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cloudinary-jquery-file-upload/-/cloudinary-jquery-file-upload-2.4.0.tgz",
+  "_shasum": "1e371e459e1b3d981ac2464eb7f08873ef0eee1b",
+  "_shrinkwrap": null,
+  "_spec": "cloudinary-jquery-file-upload",
+  "_where": "D:\\Coursework\\code\\Class Projects\\BreadCrumbs",
+  "author": {
+    "name": "Cloudinary",
+    "email": "info@cloudinary.com"
+  },
+  "bugs": {
+    "url": "https://github.com/cloudinary/cloudinary_js/issues"
+  },
+  "dependencies": {
+    "blueimp-file-upload": "^9.11.2",
+    "jquery": "^2.2.4"
+  },
+  "description": "Cloudinary Client Side JS library. Cloudinary streamlines your web application’s image manipulation needs. Cloudinary's cloud-based servers automate image uploading, resizing, cropping, optimizing, sprite generation and more. Cloudinary's jQuery File Uplo",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-1WgmdHh1/vZfxC+a+e9ffIq/o0y4KquCNRuISk0Z7LWeTDEl8IJc/iLO+DSamyTODXRc7TJWmV2r9Os/hWWIbw==",
+    "shasum": "1e371e459e1b3d981ac2464eb7f08873ef0eee1b",
+    "tarball": "https://registry.npmjs.org/cloudinary-jquery-file-upload/-/cloudinary-jquery-file-upload-2.4.0.tgz"
+  },
+  "files": [
+    "*.js"
+  ],
+  "gitHead": "c02a868566ccdf0a8d532a0fbf6bd92710497fb9",
+  "homepage": "https://github.com/cloudinary/cloudinary_js",
+  "license": "MIT",
+  "main": "cloudinary-jquery-file-upload.js",
+  "maintainers": [
+    {
+      "name": "cloudinary",
+      "email": "info@cloudinary.com"
+    }
+  ],
+  "name": "cloudinary-jquery-file-upload",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloudinary/pkg-cloudinary-jquery-file-upload.git"
+  },
+  "version": "2.4.0"
+}
