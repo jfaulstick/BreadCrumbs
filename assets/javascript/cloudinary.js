@@ -14,7 +14,8 @@ $(document).ready(function() {
 
 $(".cloudinary-fileupload").bind('cloudinarydone', function(e, data) {
 	var id = data.result.public_id;
-	var url = data.result.url;
+	var url = data.result.secure_url;
+	console.log(data);
 	console.log(id);
 	console.log(url);
 });
