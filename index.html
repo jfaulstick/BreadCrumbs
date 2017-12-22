@@ -16,7 +16,6 @@
 
 	<!-- Link to maps.css -->
 	<link rel="stylesheet" href="assets/css/maps.css">
-
 </head>
 <body>
 
@@ -35,7 +34,6 @@
     <button type="button" class="btn btn-default navbar-right navbar-btn" id="login">Login</button>
   </div>
 </nav>
-
 
 <div class="container">
 	<div class="row" id="login-Row">
@@ -134,7 +132,9 @@
 	<div class="row">
 		<form method=POST action="">
 			<div class="col-lg-12" id="cloud-upload">
-				<input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data="..." ></input>
+				<form>
+					<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
+   				<form>
 			</div>
 		</form>
 	</div>
@@ -153,8 +153,12 @@
 	<!-- Script link to custom maps.js -->
 	<script src="assets/javascript/maps.js"></script>
 
+	<script src="assets/javascript/cloudinary.js"></script>
+
 	<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP-L5yrIk6bJyMy2Nk_vkQlxkqEvgXQcI&callback=initMap"></script>
+
+	<script src="https://widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 
 	<script src="node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
 
@@ -163,6 +167,10 @@
 	<script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js" type="text/javascript"></script>
 
 	<script src="node_modules/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$.cloudinary.config({ cloud_name: 'djzxhcr1g', upload_preset: 'dzrlj6sb'});
+	</script>
 
 </body>
 </html>

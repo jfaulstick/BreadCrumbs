@@ -38,6 +38,7 @@
     "asap": "~2.0.5",
     "blueimp-file-upload": "^9.19.2",
     "chownr": "~1.0.1",
+    "cloudinary-core": "^2.4.0",
     "cloudinary-jquery-file-upload": "^2.4.0",
     "cmd-shim": "~2.0.2",
     "columnify": "~1.5.4",
