@@ -23,6 +23,21 @@ var db = firebase.database();
 var auth = firebase.auth();
 var user = firebase.auth().currentUser;
 
+function hideLogin() {
+	$("#login-Row").hide();
+}
+
+function hideRegistration() {
+	$("#registration-Row").hide();
+}
+
+function showLogin() {
+	$("#login-Row").show();
+}
+
+function showRegistration() {
+	$("#registration-Row").show();
+}
 
 // Section 3:
 // functions
@@ -30,10 +45,14 @@ var user = firebase.auth().currentUser;
 
 // When the user clicks the registration button..
 $("#register_Me").on("click", function(){
-	$("#registration-Row").show();
-	$("#login-Row").hide();
+	showRegistration();
+	hideLogin();
+});
 
-})
+$("#login").on("click", function(){
+	hideRegistration();
+	showLogin();
+});
 
 // 
 // LOGIN USER
@@ -56,11 +75,14 @@ $("#user-Login").on("click", function(event){
 	  var errorMessage = error.message;
 	  console.log(errorCode);
 	  console.log(errorMessage);
-});
+	});
+
+	user = firebase.auth().currentUser;
 
 	// show the current logged in user when use logs in
 	if (user) {
 		console.log(user);
+		hideLogin();
 	} else {
 		console.log("No user is signed in");
 	}
