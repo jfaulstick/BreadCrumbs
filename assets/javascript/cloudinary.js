@@ -11,3 +11,10 @@ $(document).ready(function() {
     $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
   }
 });
+
+$(".cloudinary-fileupload").bind('cloudinarydone', function(e, data) {
+	var id = data.result.public_id;
+	var url = data.result.url;
+	console.log(id);
+	console.log(url);
+});
