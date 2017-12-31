@@ -3,7 +3,6 @@
 // global variables
 // ============================================================================
 
-
 // Section 2:
 // Firebase CDN
 //  ===========================================================================
@@ -18,7 +17,6 @@ var config = {
   };
   firebase.initializeApp(config);
   
-
 var db = firebase.database();
 var auth = firebase.auth();
 var user = firebase.auth().currentUser;
@@ -86,10 +84,8 @@ $("#user-Login").on("click", function(event){
 	} else {
 		console.log("No user is signed in");
 	}
-
 });
 
-// 
 // CREATE USER:
 // When the user clicks the submit button in the registration form..
 $("#user-SignUp").on("click", function(event){
@@ -132,7 +128,6 @@ $("#user-SignUp").on("click", function(event){
 		}
 	})
 
-
 	// alert user of signUp
 	alert("Account successfully added!")
 
@@ -156,7 +151,6 @@ $("#user-Logout").on("click", function(){
 		console.log(error);
 	})
 });
-
 
 // Section 4:
 // Main process
