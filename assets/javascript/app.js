@@ -9,19 +9,24 @@
 //  ===========================================================================
  // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyCXu6muve1SKZFE9W0x7hvz3H_rmCJtgsQ",
-    authDomain: "breadcrumbs-1513133131724.firebaseapp.com",
-    databaseURL: "https://breadcrumbs-1513133131724.firebaseio.com",
-    projectId: "breadcrumbs-1513133131724",
-    storageBucket: "breadcrumbs-1513133131724.appspot.com",
-    messagingSenderId: "769979061333"
+    apiKey: "AIzaSyAWBH0WwUAruaTjaHGkJA51COcfO00TKGo",
+    authDomain: "breadcrumbs-98358.firebaseapp.com",
+    databaseURL: "https://breadcrumbs-98358.firebaseio.com",
+    projectId: "breadcrumbs-98358",
+    storageBucket: "breadcrumbs-98358.appspot.com",
+    messagingSenderId: "320278007810"
   };
   firebase.initializeApp(config);
   
-
+  // database reference
 var db = firebase.database();
+	// authentication reference
 var auth = firebase.auth();
+// firebase current user
 var user = firebase.auth().currentUser;
+// firebase user chatbox
+var chatData = db.ref("/chat");
+
 
 function hideLogin() {
 	$("#login-Row").hide();
@@ -43,6 +48,9 @@ function showRegistration() {
 // functions
 // =============================================================================
 
+console.log(user);
+
+	
 // When the user clicks the registration button..
 $("#register_Me").on("click", function(){
 	showRegistration();
@@ -120,6 +128,9 @@ $("#user-SignUp").on("click", function(event){
 	// Firebase tests and debugging
 	console.log(newUser.name);
 	console.log(newUser.email);
+
+	// Get firebase user key:
+	console.log(token);
 	
 	// Use firebase authentication listner to show current logged in user
 	auth.onAuthStateChanged(function(user){
@@ -157,9 +168,57 @@ $("#user-Logout").on("click", function(){
 	})
 });
 
+// 
+// Player chatbox 
+// When the users clicks the chat submit button..w
+$("#chat-Send").click(function(){
+	
+	if ($("#chat-Input").val() !== "") {
+		var message = $("#chat-Input").val();
+
+	// tests and debugging
+	console.log(message);
+
+	chatData.push({
+		name: userName,
+		message: message,
+		time: firebase.database.ServerValue.TIMESTAMP
+	});
+
+	// empty chatbox
+	$("#chat-Input").val("")
+	}
+});
+// When the user presses the enter -- input listner
+$("#chat-Input").keypress(function(e){
+
+	if (e.keyCode === 13 && $("#chat-Input").val() !== ""){
+
+		var message = $("#chat-Input").val(); 
+		userName = $("#userName").val().trim();
+
+		chatData.push({
+		name: userName,
+		message: message,
+		time: firebase.database.ServerValue.TIMESTAMP
+	});
+
+	$("#chat-Input").val("")
+
+	}
+});
+
+// Update chat on text screen when new message detected
+chatData.orderByChild("time").on("child_added", function(snapshot){
+
+	$("#chat-Messsages").append("<p class= player" + snapshot.val().name + "<span>" + snapshot.val().message + "</span></p>");
+
+	// Keep the chatbox div scrolled to bottom on each update
+	$("#chat-Messsages").scrollTop($("#chat-Messsages")[0].scrollHeight);
+});
 
 // Section 4:
-// Main process
+// 
 // ================================================================================
 // Hide the registration form from view
 $("#registration-Row").hide();
