@@ -81,6 +81,7 @@ function setLocation() {
 	if (isSignedIn) {
 		db.ref().child('users/' + userSlot + '/pos/lat').set(pos.lat);
 		db.ref().child('users/' + userSlot + '/pos/lng').set(pos.lng);
+		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
 	}
 }
 

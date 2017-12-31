@@ -131,8 +131,7 @@ $("#user-SignUp").on("click", function(event){
 	// send user login information to firebase
 	db.ref().child('users/' + userSlot + '/name').set(userName);
 	db.ref().child('users/' + userSlot + '/email').set(userEmail);
-	// Updates firebase with the user's location.
-	setLocation();
+	
 	// Create user in firebase authentication
 	auth.createUserWithEmailAndPassword(userEmail, userPassword);
 
@@ -140,6 +139,7 @@ $("#user-SignUp").on("click", function(event){
 	console.log(newUser.name);
 	console.log(newUser.email);
 
+	setLocation();
 	setUser();
 	checkUser();
 	
@@ -166,7 +166,6 @@ $("#user-SignUp").on("click", function(event){
 	$("#user-Logout").show();
 });
 
-// 
 // USER LOGOUT:
 // When the user clicks the logout button
 $("#user-Logout").on("click", function(){
