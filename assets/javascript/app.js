@@ -3,6 +3,9 @@
 // global variables
 // ============================================================================
 
+// Boolean for tracking whether or not the browser is signed in as a user
+var isSignedIn = false;
+
 // Section 2:
 // Firebase CDN
 //  ===========================================================================
@@ -15,7 +18,7 @@ var config = {
     storageBucket: "breadcrumbs-1513133131724.appspot.com",
     messagingSenderId: "769979061333"
   };
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
   
 var db = firebase.database();
 var auth = firebase.auth();
@@ -37,8 +40,21 @@ function showRegistration() {
 	$("#registration-Row").show();
 }
 
+// Sets the user variable and signed in boolean upon user sign-in.
 function setUser() {
 	user = firebase.auth().currentUser;
+	isSignedIn = true;
+}
+
+// Checks to see if the user is currently signed in.
+function checkUser() {
+	if (user) {
+		console.log("Signed in as user " + user.email);
+		console.log(user);
+		hideLogin();
+	} else {
+		console.log("No user is signed in");
+	}
 }
 
 // Section 3:
@@ -80,14 +96,8 @@ $("#user-Login").on("click", function(event){
 	});
 
 	setUser();
-
-	// show the current logged in user when use logs in
-	if (user) {
-		console.log(user);
-		hideLogin();
-	} else {
-		console.log("No user is signed in");
-	}
+	checkUser();
+	
 });
 
 // CREATE USER:
@@ -109,7 +119,7 @@ $("#user-SignUp").on("click", function(event){
 	// Tempory JSON variable to hold the user information
 	var newUser = {
 		name: userName,
-		email: userEmail
+		email: userEmail,
 	};
 
 	// send user login information to firebase
@@ -122,6 +132,7 @@ $("#user-SignUp").on("click", function(event){
 	console.log(newUser.email);
 
 	setUser();
+	checkUser();
 	
 	// Use firebase authentication listner to show current logged in user
 	auth.onAuthStateChanged(function(user){
