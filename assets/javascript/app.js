@@ -37,6 +37,10 @@ function showRegistration() {
 	$("#registration-Row").show();
 }
 
+function setUser() {
+	user = firebase.auth().currentUser;
+}
+
 // Section 3:
 // functions
 // =============================================================================
@@ -75,7 +79,7 @@ $("#user-Login").on("click", function(event){
 	  console.log(errorMessage);
 	});
 
-	user = firebase.auth().currentUser;
+	setUser();
 
 	// show the current logged in user when use logs in
 	if (user) {
@@ -116,6 +120,8 @@ $("#user-SignUp").on("click", function(event){
 	// Firebase tests and debugging
 	console.log(newUser.name);
 	console.log(newUser.email);
+
+	setUser();
 	
 	// Use firebase authentication listner to show current logged in user
 	auth.onAuthStateChanged(function(user){
