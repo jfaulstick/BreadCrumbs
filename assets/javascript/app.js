@@ -3,6 +3,10 @@
 // global variables
 // ============================================================================
 
+// Var for tracking the total number of users.
+var totalUsers;
+// Var for tracking the user slot #
+var userSlot;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
 
@@ -122,8 +126,13 @@ $("#user-SignUp").on("click", function(event){
 		email: userEmail,
 	};
 
+	userSlot = totalUsers + 1;
+
 	// send user login information to firebase
-	db.ref("/users").push(newUser);
+	db.ref().child('users/' + userSlot + '/name').set(userName);
+	db.ref().child('users/' + userSlot + '/email').set(userEmail);
+	// Updates firebase with the user's location.
+	setLocation();
 	// Create user in firebase authentication
 	auth.createUserWithEmailAndPassword(userEmail, userPassword);
 
@@ -176,3 +185,8 @@ $("#user-Logout").on("click", function(){
 $("#registration-Row").hide();
 // Hide the logout button
 // $("#user-Logout").hide();
+
+db.ref().on("value", function(snapshot) {
+	totalUsers = snapshot.child('users').numChildren();
+	console.log(totalUsers);
+});
