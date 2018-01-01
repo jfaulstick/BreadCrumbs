@@ -79,10 +79,15 @@ function getLocation() {
 // Updates firebase with current user's pos location.
 function setLocation() {
 	if (isSignedIn) {
-		db.ref().child('users/' + userSlot + '/pos/lat').set(pos.lat);
-		db.ref().child('users/' + userSlot + '/pos/lng').set(pos.lng);
+		db.ref().child('users/' + userName + '/pos/lat').set(pos.lat);
+		db.ref().child('users/' + userName + '/pos/lng').set(pos.lng);
 		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
 	}
+}
+
+function updateLocation() {
+	getLocation();
+	setLocation();
 }
 
 // Removes the markers stored in markersArray from the map.

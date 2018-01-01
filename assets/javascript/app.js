@@ -6,7 +6,7 @@
 // Var for tracking the total number of users.
 var totalUsers;
 // Var for tracking the user slot #
-var userSlot;
+var userName;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
 
@@ -86,6 +86,9 @@ $("#user-Login").on("click", function(event){
 	var loginEmail = $("#loginEmail").val().trim();
 	var loginPassword = $("#loginPassword").val().trim();
 
+	userName = loginEmail.substr(0, loginEmail.indexOf('@'));
+	console.log(userName);
+
 	// testing and debugging
 	console.log("Email " + loginEmail);
 	console.log("Password " + loginPassword);
@@ -101,6 +104,8 @@ $("#user-Login").on("click", function(event){
 
 	setUser();
 	checkUser();
+
+	updateLocation();
 	
 });
 
@@ -111,35 +116,34 @@ $("#user-SignUp").on("click", function(event){
 	event.preventDefault();
 
 	// grab the users form information and save to variables
-	var userName = $("#userName").val().trim();
+	var name = $("#userName").val().trim();
 	var userEmail = $("#userEmail").val().trim();
 	var userPassword = $("#userPassword").val().trim();
 
+	userName = userEmail.substr(0, userEmail.indexOf('@'));
+
 	// tests and debugging
 	console.log(userName);
+	console.log(name);
 	console.log(userEmail);
 	console.log(userPassword);
 
 	// Tempory JSON variable to hold the user information
 	var newUser = {
-		name: userName,
+		name: name,
 		email: userEmail,
 	};
 
 	userSlot = totalUsers + 1;
 
 	// send user login information to firebase
-	db.ref().child('users/' + userSlot + '/name').set(userName);
-	db.ref().child('users/' + userSlot + '/email').set(userEmail);
+	db.ref().child('users/' + userName + '/name').set(name);
+	db.ref().child('users/' + userName + '/email').set(userEmail);
 	
 	// Create user in firebase authentication
 	auth.createUserWithEmailAndPassword(userEmail, userPassword);
 
 	// Firebase tests and debugging
-	console.log(newUser.name);
-	console.log(newUser.email);
-
-	setLocation();
 	setUser();
 	checkUser();
 	
@@ -164,6 +168,9 @@ $("#user-SignUp").on("click", function(event){
 
 	// Show logout button when user logs in
 	$("#user-Logout").show();
+
+	// Get latest location and update firebase with user's lat and lng
+	updateLocation();
 });
 
 // USER LOGOUT:
