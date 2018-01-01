@@ -164,15 +164,6 @@ function addMarker(lat, lng, feature) {
 		}
 	};
 
-	// var breadcrumb = {
-	// 	url: 'assets/images/bread.png',
-	// 	size: new google.maps.Size(50, 50),
-	// 	origin: new google.maps.Point(0, 0),
-	// 	anchor: new google.maps.Point(0, 25)
-	// };
-
-	// console.log(breadcrumb);
-
 	var marker = new google.maps.Marker({
 		position: myLatLng,
 		map: map,
