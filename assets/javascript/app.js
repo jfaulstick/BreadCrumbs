@@ -9,6 +9,12 @@ var totalUsers;
 var userName;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
+// Total number of 'It' users allowed at one time.
+var totalIts = 1;
+// Configurable location update time interval in milliseconds
+var locationInterval = 30000;
+// For setting the connected user reference
+var userRef;
 
 // Section 2:
 // Firebase CDN
@@ -48,6 +54,7 @@ function showRegistration() {
 function setUser() {
 	user = firebase.auth().currentUser;
 	isSignedIn = true;
+	connectUser();
 }
 
 // Checks to see if the user is currently signed in.
@@ -59,6 +66,14 @@ function checkUser() {
 	} else {
 		console.log("No user is signed in");
 	}
+}
+
+// Adds the user's userName to the list of connectedUsers in firebase
+function connectUser() {
+	db.ref('connectedUsers').child(userName).set(true);
+	userRef = db.ref('connectedUsers').child(userName);
+	userRef.onDisconnect().remove();
+	console.log("User ref set to " + userRef);
 }
 
 // Section 3:
@@ -105,7 +120,10 @@ $("#user-Login").on("click", function(event){
 	setUser();
 	checkUser();
 
+	// Get latest location and update firebase with user's lat and lng
 	updateLocation();
+	// Starts location update timer
+	setLocationTimer();
 	
 });
 
@@ -171,6 +189,8 @@ $("#user-SignUp").on("click", function(event){
 
 	// Get latest location and update firebase with user's lat and lng
 	updateLocation();
+	// Starts location update timer
+	setLocationTimer();
 });
 
 // USER LOGOUT:
@@ -194,5 +214,4 @@ $("#registration-Row").hide();
 
 db.ref().on("value", function(snapshot) {
 	totalUsers = snapshot.child('users').numChildren();
-	console.log(totalUsers);
 });

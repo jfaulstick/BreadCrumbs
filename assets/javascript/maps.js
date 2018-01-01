@@ -8,6 +8,8 @@ var crumbsToShow = 10;
 var markersArray = [];
 // Array for handling the user's position
 var pos = {};
+// Location Update Timer
+var locationTimer;
 
 // Function that initializes the map
 function initMap() {
@@ -83,11 +85,27 @@ function setLocation() {
 		db.ref().child('users/' + userName + '/pos/lng').set(pos.lng);
 		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
 	}
+	else {
+		console.log("ERROR: Tried to set geolocation while not signed in.");
+	}
 }
 
+// Gets the user's location and updates it in firebase.
 function updateLocation() {
+	console.log("Updating Location");
 	getLocation();
 	setLocation();
+}
+
+// Updates the user's location on a set interval if signed in.
+function setLocationTimer() {
+	if (isSignedIn === true) {
+		console.log("Starting location update timer.");
+		locationTimer = setInterval(updateLocation, 30000);
+	}
+	else {
+		console.log("Not signed in. Location not registered");
+	}
 }
 
 // Removes the markers stored in markersArray from the map.
