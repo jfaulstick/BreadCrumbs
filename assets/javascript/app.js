@@ -13,6 +13,8 @@ var isSignedIn = false;
 var totalIts = 1;
 // Configurable location update time interval in milliseconds
 var locationInterval = 30000;
+// For setting the connected user reference
+var userRef;
 
 // Section 2:
 // Firebase CDN
@@ -52,6 +54,7 @@ function showRegistration() {
 function setUser() {
 	user = firebase.auth().currentUser;
 	isSignedIn = true;
+	connectUser();
 }
 
 // Checks to see if the user is currently signed in.
@@ -63,6 +66,14 @@ function checkUser() {
 	} else {
 		console.log("No user is signed in");
 	}
+}
+
+// Adds the user's userName to the list of connectedUsers in firebase
+function connectUser() {
+	db.ref().child('connectedUsers/' + userName + "/connected").push(true);
+	userRef = db.ref('connectedUsers/' + userName);
+	userRef.onDisconnect().remove();
+	console.log("User ref set to " + userRef);
 }
 
 // Section 3:
