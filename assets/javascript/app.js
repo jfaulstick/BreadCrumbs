@@ -11,6 +11,8 @@ var userName;
 var isSignedIn = false;
 // Total number of 'It' users allowed at one time.
 var totalIts = 1;
+// Configurable location update time interval in milliseconds
+var locationInterval = 30000;
 
 // Section 2:
 // Firebase CDN
@@ -107,6 +109,9 @@ $("#user-Login").on("click", function(event){
 	setUser();
 	checkUser();
 
+	// Get latest location and update firebase with user's lat and lng
+	updateLocation();
+	// Starts location update timer
 	setLocationTimer();
 	
 });
@@ -172,6 +177,8 @@ $("#user-SignUp").on("click", function(event){
 	$("#user-Logout").show();
 
 	// Get latest location and update firebase with user's lat and lng
+	updateLocation();
+	// Starts location update timer
 	setLocationTimer();
 });
 
