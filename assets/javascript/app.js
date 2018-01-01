@@ -70,8 +70,8 @@ function checkUser() {
 
 // Adds the user's userName to the list of connectedUsers in firebase
 function connectUser() {
-	db.ref().child('connectedUsers/' + userName).set(true);
-	userRef = db.ref('connectedUsers/' + userName);
+	db.ref('connectedUsers').child(userName).set(true);
+	userRef = db.ref('connectedUsers').child(userName);
 	userRef.onDisconnect().remove();
 	console.log("User ref set to " + userRef);
 }
