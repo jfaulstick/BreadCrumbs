@@ -9,6 +9,8 @@ var totalUsers;
 var userName;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
+// Total number of 'It' users allowed at one time.
+var totalIts = 1;
 
 // Section 2:
 // Firebase CDN
@@ -105,7 +107,7 @@ $("#user-Login").on("click", function(event){
 	setUser();
 	checkUser();
 
-	updateLocation();
+	setLocationTimer();
 	
 });
 
@@ -170,7 +172,7 @@ $("#user-SignUp").on("click", function(event){
 	$("#user-Logout").show();
 
 	// Get latest location and update firebase with user's lat and lng
-	updateLocation();
+	setLocationTimer();
 });
 
 // USER LOGOUT:
@@ -194,5 +196,4 @@ $("#registration-Row").hide();
 
 db.ref().on("value", function(snapshot) {
 	totalUsers = snapshot.child('users').numChildren();
-	console.log(totalUsers);
 });
