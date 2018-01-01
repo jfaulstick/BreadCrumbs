@@ -157,7 +157,7 @@ function addMarker(lat, lng, feature) {
 	var icons = {
 		breadcrumb: {
 			url: 'assets/images/bread-flat.png',
-			scaledSize: new google.maps.Size(28, 28),
+			scaledSize: new google.maps.Size(30, 30),
 			origin: new google.maps.Point(0, 0),
 			anchor: new google.maps.Point(0, 15),
 			title: 'Breadcrumb',
