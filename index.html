@@ -109,6 +109,33 @@
 	<!-- Below starts Joe's work -->
     
     <div id="map"></div>
+
+	<!-- Breadcrumb button to trigger the modal -->
+    <div id="crumbButton">
+		<div class="row">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal for entering Breadcrumb information -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Add Breadcrumb</h4>
+				</div>
+				<div class="modal-body">
+					<div id="">Testing Modal!</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
 		
 	<div id="crumbDiv">
 		<div class="row">
@@ -146,6 +173,9 @@
 
 	<!-- Script link for JQuery 3.2.1 -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<!-- Script link for custom app.js -->
 	<script src="assets/javascript/app.js" type="text/javascript"></script>

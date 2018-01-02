@@ -15,10 +15,10 @@ var totalIts = 1;
 var locationInterval = 30000;
 // For setting the connected user reference
 var userRef;
-// List of current 'It' users
-var itList = [];
-// Boolean for determining if the user is 'It'
-var isIt = false;
+// Global variable for storing URL of last uploaded image
+var url;
+// String that contains the image upload status
+var uploadStatus;
 
 // Section 2:
 // Firebase CDN
