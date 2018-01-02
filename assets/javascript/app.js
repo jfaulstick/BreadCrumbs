@@ -15,6 +15,10 @@ var totalIts = 1;
 var locationInterval = 30000;
 // For setting the connected user reference
 var userRef;
+// List of current 'It' users
+var itList = [];
+// Boolean for determining if the user is 'It'
+var isIt = false;
 
 // Section 2:
 // Firebase CDN
@@ -212,6 +216,7 @@ $("#registration-Row").hide();
 // Hide the logout button
 // $("#user-Logout").hide();
 
+// Get the total number of users
 db.ref().on("value", function(snapshot) {
 	totalUsers = snapshot.child('users').numChildren();
 });
