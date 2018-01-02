@@ -3,6 +3,22 @@
 // global variables
 // ============================================================================
 
+// Var for tracking the total number of users.
+var totalUsers;
+// Var for tracking the user slot #
+var userName;
+// Boolean for tracking whether or not the browser is signed in as a user
+var isSignedIn = false;
+// Total number of 'It' users allowed at one time.
+var totalIts = 1;
+// Configurable location update time interval in milliseconds
+var locationInterval = 30000;
+// For setting the connected user reference
+var userRef;
+// List of current 'It' users
+var itList = [];
+// Boolean for determining if the user is 'It'
+var isIt = false;
 
 // Section 2:
 // Firebase CDN
@@ -16,9 +32,12 @@ var config = {
     storageBucket: "breadcrumbs-98358.appspot.com",
     messagingSenderId: "320278007810"
   };
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
   
+
   // database reference
+=======
+
 var db = firebase.database();
 	// authentication reference
 var auth = firebase.auth();
@@ -42,6 +61,32 @@ function showLogin() {
 
 function showRegistration() {
 	$("#registration-Row").show();
+}
+
+// Sets the user variable and signed in boolean upon user sign-in.
+function setUser() {
+	user = firebase.auth().currentUser;
+	isSignedIn = true;
+	connectUser();
+}
+
+// Checks to see if the user is currently signed in.
+function checkUser() {
+	if (user) {
+		console.log("Signed in as user " + user.email);
+		console.log(user);
+		hideLogin();
+	} else {
+		console.log("No user is signed in");
+	}
+}
+
+// Adds the user's userName to the list of connectedUsers in firebase
+function connectUser() {
+	db.ref('connectedUsers').child(userName).set(true);
+	userRef = db.ref('connectedUsers').child(userName);
+	userRef.onDisconnect().remove();
+	console.log("User ref set to " + userRef);
 }
 
 // Section 3:
@@ -72,6 +117,9 @@ $("#user-Login").on("click", function(event){
 	var loginEmail = $("#loginEmail").val().trim();
 	var loginPassword = $("#loginPassword").val().trim();
 
+	userName = loginEmail.substr(0, loginEmail.indexOf('@'));
+	console.log(userName);
+
 	// testing and debugging
 	console.log("Email " + loginEmail);
 	console.log("Password " + loginPassword);
@@ -85,19 +133,16 @@ $("#user-Login").on("click", function(event){
 	  console.log(errorMessage);
 	});
 
-	user = firebase.auth().currentUser;
+	setUser();
+	checkUser();
 
-	// show the current logged in user when use logs in
-	if (user) {
-		console.log(user);
-		hideLogin();
-	} else {
-		console.log("No user is signed in");
-	}
-
+	// Get latest location and update firebase with user's lat and lng
+	updateLocation();
+	// Starts location update timer
+	setLocationTimer();
+	
 });
 
-// 
 // CREATE USER:
 // When the user clicks the submit button in the registration form..
 $("#user-SignUp").on("click", function(event){
@@ -105,32 +150,38 @@ $("#user-SignUp").on("click", function(event){
 	event.preventDefault();
 
 	// grab the users form information and save to variables
-	var userName = $("#userName").val().trim();
+	var name = $("#userName").val().trim();
 	var userEmail = $("#userEmail").val().trim();
 	var userPassword = $("#userPassword").val().trim();
 
+	userName = userEmail.substr(0, userEmail.indexOf('@'));
+
 	// tests and debugging
 	console.log(userName);
+	console.log(name);
 	console.log(userEmail);
 	console.log(userPassword);
 
 	// Tempory JSON variable to hold the user information
 	var newUser = {
-		name: userName,
-		email: userEmail
+		name: name,
+		email: userEmail,
 	};
 
+	userSlot = totalUsers + 1;
+
 	// send user login information to firebase
-	db.ref("/users").push(newUser);
+	db.ref().child('users/' + userName + '/name').set(name);
+	db.ref().child('users/' + userName + '/email').set(userEmail);
+	
 	// Create user in firebase authentication
 	auth.createUserWithEmailAndPassword(userEmail, userPassword);
 
 	// Firebase tests and debugging
-	console.log(newUser.name);
-	console.log(newUser.email);
 
-	// Get firebase user key:
-	console.log(token);
+
+	setUser();
+	checkUser();
 	
 	// Use firebase authentication listner to show current logged in user
 	auth.onAuthStateChanged(function(user){
@@ -143,7 +194,6 @@ $("#user-SignUp").on("click", function(event){
 		}
 	})
 
-
 	// alert user of signUp
 	alert("Account successfully added!")
 
@@ -154,9 +204,13 @@ $("#user-SignUp").on("click", function(event){
 
 	// Show logout button when user logs in
 	$("#user-Logout").show();
+
+	// Get latest location and update firebase with user's lat and lng
+	updateLocation();
+	// Starts location update timer
+	setLocationTimer();
 });
 
-// 
 // USER LOGOUT:
 // When the user clicks the logout button
 $("#user-Logout").on("click", function(){
@@ -167,6 +221,7 @@ $("#user-Logout").on("click", function(){
 		console.log(error);
 	})
 });
+
 
 // 
 // Player chatbox 
@@ -217,6 +272,7 @@ chatData.orderByChild("time").on("child_added", function(snapshot){
 	$("#chat-Messsages").scrollTop($("#chat-Messsages")[0].scrollHeight);
 });
 
+
 // Section 4:
 // 
 // ================================================================================
@@ -224,3 +280,8 @@ chatData.orderByChild("time").on("child_added", function(snapshot){
 $("#registration-Row").hide();
 // Hide the logout button
 // $("#user-Logout").hide();
+
+// Get the total number of users
+db.ref().on("value", function(snapshot) {
+	totalUsers = snapshot.child('users').numChildren();
+});
