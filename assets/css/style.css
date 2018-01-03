@@ -9,3 +9,9 @@
 #registration-Row {
 	display: none;
 }
+
+#modalImage {
+	margin: auto;
+	width: 270px;
+	height: 400px;
+}

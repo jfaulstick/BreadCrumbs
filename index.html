@@ -129,9 +129,24 @@
 				</div>
 				<div class="modal-body">
 					<div id="">Testing Modal!</div>
+					<div class="row">
+						<div class="col-xs-12" id="modalImage">
+							<!-- <img src="https://res.cloudinary.com/djzxhcr1g/image/upload/w_270,h_400,c_crop/v1513739679/sample.jpg"/> -->
+						</div>
+					</div>
+					<div class="row">
+						<form method=POST action="">
+							<div class="col-lg-12" id="cloud-upload">
+								<form>
+									<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
+				   				<form>
+							</div>
+						</form>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="submit-crumb">Submit</button>
 				</div>
 			</div>
 		</div>
@@ -155,17 +170,6 @@
 	</div>
 
 	<div id="crumbFormMsg"></div>
-
-	<div class="row">
-		<form method=POST action="">
-			<div class="col-lg-12" id="cloud-upload">
-				<form>
-					<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
-   				<form>
-			</div>
-		</form>
-	</div>
-
 </div>
 
 	<!-- Script link for Firebase -->

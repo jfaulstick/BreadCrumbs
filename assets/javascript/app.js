@@ -17,6 +17,8 @@ var locationInterval = 30000;
 var userRef;
 // Global variable for storing URL of last uploaded image
 var url;
+// Global variable for storing the version number of the last uploaded image
+var imageVersion;
 // String that contains the image upload status
 var uploadStatus;
 
