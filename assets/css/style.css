@@ -1,3 +1,7 @@
+h4 {
+	font-weight: bold;
+}
+
 #cloud-upload {
 	margin-top: 16px;
 }
@@ -6,8 +10,13 @@
 	display: none;
 }
 
-#registration-Row {
-	display: none;
+.messageArea {
+	height: 32px;
+}
+
+#registerMessage, #loginMessage {
+	color: red;
+	text-align: center;
 }
 
 #modalImage {

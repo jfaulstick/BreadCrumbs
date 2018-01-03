@@ -36,20 +36,43 @@ var db = firebase.database();
 var auth = firebase.auth();
 var user = firebase.auth().currentUser;
 
-function hideLogin() {
-	$("#login-Row").hide();
+function showLoginScreen() {
+	$("#loginScreen").show();
 }
 
-function hideRegistration() {
-	$("#registration-Row").hide();
+function hideLoginScreen() {
+	$("#loginScreen").hide();
 }
 
-function showLogin() {
-	$("#login-Row").show();
+function showItScreen() {
+	$("#itScreen").show()
 }
 
-function showRegistration() {
-	$("#registration-Row").show();
+function hideItScreen() {
+	$("#itScreen").hide();
+}
+
+function showSeekerScreen() {
+	$("#seekerScreen").show();
+}
+
+function hideSeekerScreen() {
+	$("#seekerScreen").hide();
+}
+
+function displayScreen() {
+	if (isIt == true) {
+		showItScreen();
+	}
+	else {
+		showSeekerScreen();
+	}
+}
+
+function hideScreen() {
+	hideItScreen();
+	hideSeekerScreen();
+	showLoginScreen();
 }
 
 // Sets the user variable and signed in boolean upon user sign-in.
@@ -57,6 +80,16 @@ function setUser() {
 	user = firebase.auth().currentUser;
 	isSignedIn = true;
 	connectUser();
+	displayScreen();
+}
+
+function signOutUser() {
+	userRef.remove();
+	isSignedIn = false;
+	isIt = false;
+	userName = "";
+	userRef = "";
+	hideScreen();
 }
 
 // Checks to see if the user is currently signed in.
@@ -64,7 +97,7 @@ function checkUser() {
 	if (user) {
 		console.log("Signed in as user " + user.email);
 		// console.log(user);
-		hideLogin();
+		hideLoginScreen();
 	} else {
 		console.log("No user is signed in");
 	}
@@ -78,20 +111,26 @@ function connectUser() {
 	// console.log("User ref set to " + userRef);
 }
 
+function clearRegisterForm() {
+	$("#userName").val("");
+	$("#userEmail").val("");
+	$("#userPassword").val("");
+}
+
+function clearLoginForm() {
+	$("#login-email").val("");
+	$("#login-password").val("");
+}
+
 // Section 3:
 // functions
 // =============================================================================
 
 // When the user clicks the registration button..
-$("#register_Me").on("click", function(){
-	showRegistration();
-	hideLogin();
-});
-
-$("#login").on("click", function(){
-	hideRegistration();
-	showLogin();
-});
+// $("#register_Me").on("click", function(){
+// 	showRegistration();
+// 	hideLogin();
+// });
 
 // 
 // LOGIN USER
@@ -103,30 +142,32 @@ $("#user-Login").on("click", function(event){
 	var loginEmail = $("#loginEmail").val().trim();
 	var loginPassword = $("#loginPassword").val().trim();
 
-	userName = loginEmail.substr(0, loginEmail.indexOf('@'));
-	// console.log(userName);
+	if (loginEmail !== "" && loginPassword !== "") {
 
-	// testing and debugging
-	// console.log("Email " + loginEmail);
-	// console.log("Password " + loginPassword);
+		userName = loginEmail.substr(0, loginEmail.indexOf('@'));
 
-	// pass user login info to firebase
-	firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword).catch(function(error) {
-	  // Handle Errors here.
-	  var errorCode = error.code;
-	  var errorMessage = error.message;
-	  console.log(errorCode);
-	  console.log(errorMessage);
-	});
+		// pass user login info to firebase
+		firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword).catch(function(error) {
+		  // Handle Errors here.
+		  var errorCode = error.code;
+		  var errorMessage = error.message;
+		  console.log(errorCode);
+		  console.log(errorMessage);
+		});
 
-	setUser();
-	checkUser();
+		setUser();
+		checkUser();
 
-	// Get latest location and update firebase with user's lat and lng
-	updateLocation();
-	// Starts location update timer
-	setLocationTimer();
-	
+		// Get latest location and update firebase with user's lat and lng
+		updateLocation();
+		// Starts location update timer
+		setLocationTimer();
+		$("#loginModal").modal("hide");
+	}
+	else {
+		console.log("Login form missing some information.");
+		$("#loginMessage").text("No fields can be empty!");
+	}
 });
 
 // CREATE USER:
@@ -140,60 +181,74 @@ $("#user-SignUp").on("click", function(event){
 	var userEmail = $("#userEmail").val().trim();
 	var userPassword = $("#userPassword").val().trim();
 
-	userName = userEmail.substr(0, userEmail.indexOf('@'));
+	if (name !== "" && userEmail !== "" && userPassword !== "") {
 
-	// tests and debugging
-	console.log(userName);
-	console.log(name);
-	console.log(userEmail);
-	console.log(userPassword);
+		userName = userEmail.substr(0, userEmail.indexOf('@'));
 
-	// Tempory JSON variable to hold the user information
-	var newUser = {
-		name: name,
-		email: userEmail,
-	};
+		// tests and debugging
+		console.log(userName);
+		console.log(name);
+		console.log(userEmail);
+		console.log(userPassword);
 
-	userSlot = totalUsers + 1;
+		// Tempory JSON variable to hold the user information
+		var newUser = {
+			name: name,
+			email: userEmail,
+		};
 
-	// send user login information to firebase
-	db.ref().child('users/' + userName + '/name').set(name);
-	db.ref().child('users/' + userName + '/email').set(userEmail);
-	
-	// Create user in firebase authentication
-	auth.createUserWithEmailAndPassword(userEmail, userPassword);
+		userSlot = totalUsers + 1;
 
-	// Firebase tests and debugging
-	setUser();
-	checkUser();
-	
-	// Use firebase authentication listner to show current logged in user
-	auth.onAuthStateChanged(function(user){
-		if (user) {
-			console.log("You are signed in");
-			console.log(user);
-		} else {
-			console.log("Your are not signed in");
-			console.log("Please log in");
-		}
-	})
+		// send user login information to firebase
+		db.ref().child('users/' + userName + '/name').set(name);
+		db.ref().child('users/' + userName + '/email').set(userEmail);
+		
+		// Create user in firebase authentication
+		auth.createUserWithEmailAndPassword(userEmail, userPassword);
 
-	// alert user of signUp
-	console.log("Account successfully added!")
-	$("#registration-Row").hide();
+		// Firebase tests and debugging
+		setUser();
+		checkUser();
+		
+		// Use firebase authentication listner to show current logged in user
+		auth.onAuthStateChanged(function(user){
+			if (user) {
+				console.log("You are signed in");
+				console.log(user);
+			} else {
+				console.log("Your are not signed in");
+				console.log("Please log in");
+			}
+		});
 
-	// clear the form
-	$("#userName").val("");
-	$("#userEmail").val("");
-	$("#userPassword").val("");
+		// alert user of signUp
+		console.log("Account successfully added!")
+		hideRegistration();
 
-	// Show logout button when user logs in
-	$("#user-Logout").show();
+		// clear the form
+		clearRegisterForm();
 
-	// Get latest location and update firebase with user's lat and lng
-	updateLocation();
-	// Starts location update timer
-	setLocationTimer();
+		// Show logout button when user logs in
+		$("#user-Logout").show();
+
+		// Get latest location and update firebase with user's lat and lng
+		updateLocation();
+		// Starts location update timer
+		setLocationTimer();
+		$("#registerModal").modal("hide");
+	}
+	else {
+		console.log("Register form missing some information.");
+		$("#registerMessage").text("No fields can be empty!");
+	}
+});
+
+$("#cancel-register").on("click", function() {
+	clearRegisterForm();
+});
+
+$("#cancel-login").on("click", function() {
+	clearLoginForm();
 });
 
 // USER LOGOUT:
@@ -201,6 +256,7 @@ $("#user-SignUp").on("click", function(event){
 $("#user-Logout").on("click", function(){
 	auth.signOut().then(function() {
 		console.log("Sign-out successful.");
+		signOutUser();
 	}).catch(function(error){
 		console.log("An error has occured when logging out.");
 		console.log(error);
@@ -210,10 +266,11 @@ $("#user-Logout").on("click", function(){
 // Section 4:
 // Main process
 // ================================================================================
-// Hide the registration form from view
-$("#registration-Row").hide();
-// Hide the logout button
-// $("#user-Logout").hide();
+
+// Hide It and Seeker screens and display Login screen on startup
+hideItScreen();
+hideSeekerScreen();
+showLoginScreen();
 
 // Get the total number of users
 db.ref().on("value", function(snapshot) {

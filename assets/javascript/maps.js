@@ -206,6 +206,7 @@ var getDistance = function() {
 	var m = d * 0.00062137; // Convert meters to miles
 	distanceToIt = m.toFixed(2);
 	return m.toFixed(2); // returns the distance in miles
+	console.log("User is " + distanceToIt + " miles from IT's last known location.");
 }
 
 $("#submit-crumb").on("click", function() {
