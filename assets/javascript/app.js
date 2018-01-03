@@ -44,6 +44,30 @@ function hideLoginScreen() {
 	$("#loginScreen").hide();
 }
 
+function showLogoutButton() {
+	$("#user-Logout").show();
+}
+
+function hideLogoutButton() {
+	$("#user-Logout").hide();
+}
+
+function showLoginButton() {
+	$("#login").show();
+}
+
+function hideLoginButton() {
+	$("#login").hide();
+}
+
+function showRegisterButton() {
+	$("#register_Me").show();
+}
+
+function hideRegisterButton() {
+	$("#register_Me").hide();
+}
+
 function showItScreen() {
 	$("#itScreen").show()
 }
@@ -61,6 +85,9 @@ function hideSeekerScreen() {
 }
 
 function displayScreen() {
+	hideLoginButton();
+	hideRegisterButton();
+	showLogoutButton();
 	if (isIt == true) {
 		showItScreen();
 	}
@@ -72,6 +99,9 @@ function displayScreen() {
 function hideScreen() {
 	hideItScreen();
 	hideSeekerScreen();
+	hideLogoutButton();
+	showLoginButton();
+	showRegisterButton();
 	showLoginScreen();
 }
 
@@ -223,7 +253,6 @@ $("#user-SignUp").on("click", function(event){
 
 		// alert user of signUp
 		console.log("Account successfully added!")
-		hideRegistration();
 
 		// clear the form
 		clearRegisterForm();
@@ -270,6 +299,7 @@ $("#user-Logout").on("click", function(){
 // Hide It and Seeker screens and display Login screen on startup
 hideItScreen();
 hideSeekerScreen();
+hideLogoutButton();
 showLoginScreen();
 
 // Get the total number of users
