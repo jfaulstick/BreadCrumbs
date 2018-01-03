@@ -15,7 +15,7 @@ var locationTimer;
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: -34.397, lng: 150.644},
-		zoom: 8,
+		zoom: 9,
 		streetViewControl: false
 });
 
@@ -51,7 +51,7 @@ function mapCenter() {
 }
 
 function logLocation(lat, lng) {
-	console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
+	// console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
 }
 
 // Updates variable pos with the user's current geolocation coordinates
@@ -66,7 +66,6 @@ function getLocation() {
 			};
 
 			logLocation(pos.lat, pos.lng);
-			console.log(pos);
 			// return pos;
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -172,7 +171,6 @@ function addMarker(lat, lng, feature) {
 	});
 
 	markersArray.push(marker);
-	console.log(marker);
 }
 
 // Submits a new breadcrumb at the device's geolocation
@@ -207,7 +205,6 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 	
 	if (snapshot.exists()) {
 		console.log("There are " + crumbList.length + " total breadcrumbs.");
-		console.log(crumbList);
 
 		for (i = 0; i < crumbList.length; i++) {
 			var lat = crumbList[i].lat;

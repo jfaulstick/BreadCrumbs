@@ -65,7 +65,7 @@ function setUser() {
 function checkUser() {
 	if (user) {
 		console.log("Signed in as user " + user.email);
-		console.log(user);
+		// console.log(user);
 		hideLogin();
 	} else {
 		console.log("No user is signed in");
@@ -77,7 +77,7 @@ function connectUser() {
 	db.ref('connectedUsers').child(userName).set(true);
 	userRef = db.ref('connectedUsers').child(userName);
 	userRef.onDisconnect().remove();
-	console.log("User ref set to " + userRef);
+	// console.log("User ref set to " + userRef);
 }
 
 // Section 3:
@@ -106,11 +106,11 @@ $("#user-Login").on("click", function(event){
 	var loginPassword = $("#loginPassword").val().trim();
 
 	userName = loginEmail.substr(0, loginEmail.indexOf('@'));
-	console.log(userName);
+	// console.log(userName);
 
 	// testing and debugging
-	console.log("Email " + loginEmail);
-	console.log("Password " + loginPassword);
+	// console.log("Email " + loginEmail);
+	// console.log("Password " + loginPassword);
 
 	// pass user login info to firebase
 	firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword).catch(function(error) {
