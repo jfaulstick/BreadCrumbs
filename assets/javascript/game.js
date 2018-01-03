@@ -13,6 +13,7 @@ function checkIt() {
 		console.log("No IT exists!");
 		addIt(userName);
 		console.log(itList);
+		itChecked = true;
 	}
 	else if (itExists == true && isIt == true) {
 		console.log("The user is IT!");
@@ -56,14 +57,19 @@ db.ref('connectedUsers').on("value", function(snapshot) {
 	if (snapshot.exists() && itChecked == false) {
 		var users = snapshot.val();
 		console.log(users);
-		if (userName in users && isSignedIn == true) {
+		if (userName in users && isSignedIn == true && itChecked == false && itExists == true) {
 			checkIfIt();
 		}
-		if (isIt == false) {
+		else if (isIt == false && itChecked == false && itExists == true) {
 			checkIt();
+			console.log("isIT = false, itChecked = false, itExists = true");
+		}
+		else if (isIt == true) {
+			console.log("User is IT. No need to check for other ITs");
+			itChecked = true;
 		}
 		else {
-			console.log("User is IT. No need to check for other ITs");
+			console.log("Something went wrong when determining if there's an IT");
 		}
 	}
 });
