@@ -20,3 +20,24 @@
 	margin: auto;
 	color: red;
 }
+
+#headerId {
+	height: 50px;
+}
+
+#logo {
+	margin-top: 8px;
+}
+
+#logoImage {
+	height: 42px;
+	width: 42px;
+	padding-bottom: 8px;
+	float: left;
+}
+
+#logoText {
+	float: left;
+	margin-left: 8px;
+	margin-top: 6px;
+}

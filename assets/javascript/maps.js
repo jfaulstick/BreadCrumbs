@@ -12,6 +12,8 @@ var pos = {};
 var posIt = {};
 // Location Update Timer
 var locationTimer;
+// Distance between the user and it
+var distanceToIt;
 
 // Function that initializes the map
 function initMap() {
@@ -103,6 +105,11 @@ function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+
+	if (isIt == false) {
+		getDistance();
+		console.log("User is " + distanceToIt + " miles from IT's last known location.");
+	}
 }
 
 // Updates the user's location on a set interval if signed in.
@@ -197,7 +204,8 @@ var getDistance = function() {
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	var d = R * c; // d = distance in meters
 	var m = d * 0.00062137; // Convert meters to miles
-	return m; // returns the distance in miles
+	distanceToIt = m.toFixed(2);
+	return m.toFixed(2); // returns the distance in miles
 }
 
 $("#submit-crumb").on("click", function() {
