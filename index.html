@@ -131,6 +131,49 @@
 
 	It Screen!
 
+	<div id="crumbButton">
+		<div class="row">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal for entering Breadcrumb information -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Add Breadcrumb</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<!-- Empty Div for dynamically populating with the image uploaded -->
+						<div class="col-xs-12" id="modalImage"></div>
+					</div>
+					<div class="row">
+						<!-- Empty crumb for displaying messaging -->
+						<div class="col-xs-12 text-center" id="crumbMsg"></div>
+					</div>
+					<div class="row">
+						<form method=POST action="">
+							<div class="col-lg-12" id="cloud-upload">
+								<form>
+									<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
+				   				<form>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="cancel-crumb" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="submit-crumb">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 
