@@ -79,7 +79,14 @@ function getLocation() {
 
 // Updates firebase with current user's pos location.
 function setLocation() {
-	if (isSignedIn) {
+	if (isSignedIn && isIt) {
+		db.ref().child('connectedUsers/' + userName + '/pos/lat').set(pos.lat);
+		db.ref().child('connectedUsers/' + userName + '/pos/lng').set(pos.lng);
+		db.ref().child('itList/' + userName + '/pos/lat').set(pos.lat);
+		db.ref().child('itList/' + userName + '/pos/lng').set(pos.lng);
+		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
+	}
+	else if (isSignedIn && !isIt) {
 		db.ref().child('connectedUsers/' + userName + '/pos/lat').set(pos.lat);
 		db.ref().child('connectedUsers/' + userName + '/pos/lng').set(pos.lng);
 		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
