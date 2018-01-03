@@ -17,8 +17,8 @@ $(document).ready(function() {
 });
 
 $(".cloudinary-fileupload").bind('cloudinarydone', function(e, data) {
+	url = data.result.secure_url;
 	var id = data.result.public_id;
-	var url = data.result.secure_url;
 	var version = data.result.version;
 	var format = data.result.format;
 	console.log(data);
@@ -26,5 +26,7 @@ $(".cloudinary-fileupload").bind('cloudinarydone', function(e, data) {
 	console.log("Image Version: " + version);
 	console.log("Image Format: " + format);
 	console.log("Image URL: " + url);
+	imageReady = true;
+	$("#crumbMsg").empty();
 	displayModalImage(id, version, format);
 });

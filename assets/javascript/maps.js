@@ -125,10 +125,12 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 // Adds new breadcrumb to breadcrumbList object in Firebase
-function addCrumb(lat, lng) {
+function addCrumb(user, lat, lng, url) {
 	var breadcrumb = {
+		user: userName,
 		lat: lat,
-		lng: lng
+		lng: lng,
+		url: url
 	};
 
 	// If there are fewer index entries than the variable crumbsToShow, just add the new breadcrumb
@@ -196,6 +198,25 @@ $("#manualCrumbInput").on("click", function() {
 		console.log("New manual breadcrumb at Lat: " + lat + " / Lng " + lng);
 		$("#crumbFormMsg").empty();
 	}
+});
+
+$("#submit-crumb").on("click", function() {
+	if (imageReady == true) {
+		$("#modalImage").empty();
+		$("#crumbMsg").empty();
+		$("#myModal").modal("hide");
+		imageReady = false;
+		getLocation();
+		addCrumb(userName, pos.lat, pos.lng, url);
+	}
+	else {
+		$("#crumbMsg").text("Image Required!");
+	}
+});
+
+$("#cancel-crumb").on("click", function() {
+	$("#modalImage").empty();
+	$("#crumbMsg").empty();
 });
 
 // At Launch or when breadcrumbList is updated, adds marker for each of last 10 breadcrumbs
