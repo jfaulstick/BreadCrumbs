@@ -20,6 +20,7 @@
 <body>
 
 <!-- Navbar -->
+	
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header" id="headerId">
@@ -31,107 +32,88 @@
 	</div>
     <!-- Navbar buttons -->
     <button type="button" class="btn btn-default navbar-right navbar-btn" id="user-Logout">Logout</button>
-    <button type="button" class="btn btn-default navbar-right navbar-btn" id="register_Me" data-toggle="modal" data-target="#registerModal">Register</button>
-    <button type="button" class="btn btn-default navbar-right navbar-btn" id="login" data-toggle="modal" data-target="#loginModal">Login</button>
+    <button type="button" class="btn btn-default navbar-right navbar-btn" id="register_Me">Register</button>
+    <button type="button" class="btn btn-default navbar-right navbar-btn" id="login">Login</button>
   </div>
 </nav>
-<div class="container" id="mapContainer">
-	<div id="map"></div>
-</div>
 
-<div class="container" id="loginScreen">
-	
-	<!-- This div contains the registration modal -->
-	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="registerModalLabel">Login:</h4>
+<div class="container">
+	<div class="row" id="login-Row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><strong>Login:</strong></h3>
 				</div>
-				<div class="modal-body">
-					<div class="panel-body">
-						<div class="messageArea">
-							<div id="registerMessage"></div>
+			
+			<!-- This body will hold the login form -->
+				<div class="panel-body">
+					<form>
+						<!-- Input for user Email -->
+						<div class="form-group">
+							<label for="login-email">Email:</label>
+							<br>
+							<input type="text" id="loginEmail">
 						</div>
-						<form>
-							<!-- Input for user name -->
-							<div class="form-group">
-								<label for="users-Name">Name:</label>
-								<br>
-								<input type="text" id="userName">
-							</div>
-							<!-- Input for user Email -->
-							<div class="form-group">
-								<label for="users-email">Email:</label>
-								<br>
-								<input type="text" id="userEmail">
-							</div>
-							<!-- Input for user password -->
-							<div class="form-group">
-								<label for="users-password">Password:</label>
-								<br>
-								<input type="password" id="userPassword">
-							</div>
-
-							<button type="submit" class="btn btn-primary" id="user-SignUp">Submit</button>
-							
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="cancel-register" data-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- This div contains the login modal -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="loginModalLabel">Sign Up:</h4>
-				</div>
-				<div class="modal-body">
-					<!-- This body will hold the login form -->
-					<div class="panel-body">
-						<div class="messageArea">
-							<div id="loginMessage"></div>
+						<!-- Input for user password -->
+						<div class="form-group">
+							<label for="login-password">Password:</label>
+							<br>
+							<input type="password" id="loginPassword">
 						</div>
-						<form>
-							<!-- Input for user Email -->
-							<div class="form-group">
-								<label for="login-email">Email:</label>
-								<br>
-								<input type="text" id="loginEmail">
-							</div>
-							<!-- Input for user password -->
-							<div class="form-group">
-								<label for="login-password">Password:</label>
-								<br>
-								<input type="password" id="loginPassword">
-							</div>
 
-							<button type="submit" class="btn btn-primary" id="user-Login">Login</button>
-							
-						</form>
-					</div>
+						<button type="submit" class="btn btn-default" id="user-Login">Login</button>
+						
+					</form>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="cancel-login" data-dismiss="modal">Cancel</button>
-				</div>
+
 			</div>
-		</div>
+		</div>	
 	</div>
-</div>
+<!-- Row 2: -->
+<!-- This row below holds the registration form -->
+	<div class="row" id="registration-Row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Sign Up:</h3>
+				</div>
+			
+			<!-- This body will hold the registration -->
+				<div class="panel-body">
+					<form>
+						<!-- Input for user name -->
+						<div class="form-group">
+							<label for="users-Name">Name:</label>
+							<br>
+							<input type="text" id="userName">
+						</div>
+						<!-- Input for user Email -->
+						<div class="form-group">
+							<label for="users-email">Email:</label>
+							<br>
+							<input type="text" id="userEmail">
+						</div>
+						<!-- Input for user password -->
+						<div class="form-group">
+							<label for="users-password">Password:</label>
+							<br>
+							<input type="password" id="userPassword">
+						</div>
 
-<div class="container" id="itScreen">
+						<button type="submit" class="btn btn-default" id="user-SignUp">Submit</button>
+						
+					</form>
+				</div>
 
-	It Screen!
+			</div>
+		</div>	
+	</div>
+	<!-- Below starts Joe's work -->
+    
+    <div id="map"></div>
 
-	<div id="crumbButton">
+	<!-- Breadcrumb button to trigger the modal -->
+    <div id="crumbButton">
 		<div class="row">
 			<div class="col-xs-12">
 				<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
@@ -174,13 +156,7 @@
 		</div>
 	</div>
 
-</div>
-
-
-<div class="container" id="seekerScreen">
-
-	Seeker Screen!
-
+	<div id="crumbFormMsg"></div>
 </div>
 
 	<!-- Script link for Firebase -->

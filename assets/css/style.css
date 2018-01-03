@@ -1,3 +1,7 @@
+h4 {
+	font-weight: bold;
+}
+
 #cloud-upload {
 	margin-top: 16px;
 }
@@ -6,6 +10,43 @@
 	display: none;
 }
 
-#registration-Row {
-	display: none;
+.messageArea {
+	height: 32px;
+}
+
+#registerMessage, #loginMessage {
+	color: red;
+	text-align: center;
+}
+
+#modalImage {
+	margin: auto;
+	width: 270px;
+	height: 400px;
+}
+
+#crumbMsg {
+	margin: auto;
+	color: red;
+}
+
+#headerId {
+	height: 50px;
+}
+
+#logo {
+	margin-top: 8px;
+}
+
+#logoImage {
+	height: 42px;
+	width: 42px;
+	padding-bottom: 8px;
+	float: left;
+}
+
+#logoText {
+	float: left;
+	margin-left: 8px;
+	margin-top: 6px;
 }
