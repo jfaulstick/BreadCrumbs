@@ -6,8 +6,10 @@ var crumbList = new Array();
 var crumbsToShow = 10;
 // Array to hold the google map markers
 var markersArray = [];
-// Array for handling the user's position
+// Object for handling the user's position
 var pos = {};
+// Object for handling It's position
+var posIt = {};
 // Location Update Timer
 var locationTimer;
 
@@ -182,31 +184,6 @@ function addMarker(lat, lng, feature) {
 	markersArray.push(marker);
 }
 
-// Submits a new breadcrumb at the device's geolocation
-$("#autoCrumbInput").on("click", function() {
-	getLocation();
-
-	addCrumb(pos.lat, pos.lng);
-	console.log("New auto breadcrumb added at Lat: " + lat + " / Lng " + lng);
-})
-
-// Submits a new breadcrumb with lat / lng manually entered in a form
-$("#manualCrumbInput").on("click", function() {
-	var lat = parseFloat($("#lat").val().trim());
-	var lng = parseFloat($("#lng").val().trim());
-
-	if (lat == "" || lng == "") {
-		$("#crumbFormMsg").text("All fields must have proper values inputted.");
-	} 
-	else {
-		// Calls function to add the crumb to Firebase
-		addCrumb(lat, lng);
-
-		console.log("New manual breadcrumb at Lat: " + lat + " / Lng " + lng);
-		$("#crumbFormMsg").empty();
-	}
-});
-
 $("#submit-crumb").on("click", function() {
 	if (imageReady == true) {
 		$("#modalImage").empty();
@@ -242,5 +219,14 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 			console.log("Adding breadcrumb in index " + i + " at Lat: " + lat + " / Lng: " + lng);
 		}
 	}
+});
 
+db.ref('itList').on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		var itList = snapshot.val();
+		var itListKeys = Object.keys(itList);
+		var itName = itListKeys[0];
+		posIt = itList[itName].pos;
+		console.log("IT's location is Lat: " + posIt.lat + "/ Lng: " + posIt.lng);
+	}
 });

@@ -9,8 +9,6 @@ var totalUsers;
 var userName;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
-// Total number of 'It' users allowed at one time.
-var totalIts = 1;
 // Configurable location update time interval in milliseconds
 var locationInterval = 30000;
 // For setting the connected user reference
@@ -181,7 +179,8 @@ $("#user-SignUp").on("click", function(event){
 	})
 
 	// alert user of signUp
-	alert("Account successfully added!")
+	console.log("Account successfully added!")
+	$("#registration-Row").hide();
 
 	// clear the form
 	$("#userName").val("");
