@@ -184,6 +184,22 @@ function addMarker(lat, lng, feature) {
 	markersArray.push(marker);
 }
 
+// Use the Haversine formula to detect distance in meters between two coordinates
+var rad = function(x) {
+	return x * Math.PI / 180;
+};
+
+var getDistance = function() {
+	var R = 6378137; // Earth's mean radius in meters
+	var dLat = rad(posIt.lat - pos.lat);
+	var dLng = rad(posIt.lng - pos.lng);
+	var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(pos.lat)) * Math.cos(rad(posIt.lat)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	var d = R * c; // d = distance in meters
+	var m = d * 0.00062137; // Convert meters to miles
+	return m; // returns the distance in miles
+}
+
 $("#submit-crumb").on("click", function() {
 	if (imageReady == true) {
 		$("#modalImage").empty();
