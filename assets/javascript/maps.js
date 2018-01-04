@@ -105,6 +105,7 @@ function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+	addMarker(pos.lat, pos.lng, 'userLocation');
 
 	if (isIt == false) {
 		getDistance();
@@ -178,6 +179,15 @@ function addMarker(lat, lng, feature) {
 			origin: new google.maps.Point(0, 0),
 			anchor: new google.maps.Point(0, 15),
 			title: 'Breadcrumb',
+			zIndex: 0,
+		},
+		userLocation: {
+			url: 'assets/images/youarehere.png',
+			scaledSize: new google.maps.Size(30, 30),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(0, 15),
+			title: 'You are here',
+			zIndex: 1,
 		}
 	};
 
