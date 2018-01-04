@@ -117,6 +117,8 @@ function hideScreen() {
 function setUser() {
 	user = firebase.auth().currentUser;
 	isSignedIn = true;
+	checkIfIt();
+	checkIt();
 	connectUser();
 	displayScreen();
 }

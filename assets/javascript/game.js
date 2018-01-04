@@ -15,11 +15,17 @@ var connectedUsers = 0;
 
 // Checks to see if an 'It' user exists
 function checkIt() {
-	if (itExists == false) {
+	if (itChecked == true) {
+		return;
+	}
+	else if (itExists == false) {
 		console.log("No IT exists!");
-		addIt(userName);
-		console.log(itList);
+		addIt();
 		itChecked = true;
+	}
+	else if (itExists == true && isIt == false) {
+		itChecked = true;
+		return;
 	}
 	else if (itExists == true && isIt == true) {
 		console.log("The user is IT!");
@@ -37,15 +43,16 @@ function checkIfIt() {
 	}
 	else if (userName in itList) {
 		isIt = true;
-		itChecked = true;
+		checkIt();
 	}
 }
 
 // Function for adding the current user to the list of 'It' users in firebase
 function addIt() {
 	if (isIt == false) {
-		db.ref('itList').child(userName).set(true);
 		isIt = true;
+		setLocation();
+		
 		console.log("You are IT!");
 	}
 	else {
@@ -67,58 +74,47 @@ function isItOnline(users) {
 	}
 };
 
-function updateUserCount() {
-	var users = connectedUsers.length;
-	var usersIt = users - 1;
+function updateUserCount() {;
+	var usersIt = connectedUsers - 1;
 	$('#connectedUsersIt').text("There are " + usersIt + " seekers logged in and looking for you!");
-	$('#connectedUsersSeeker').text("There are " + users + " users logged in right now.");
+	$('#connectedUsersSeeker').text("There are " + connectedUsers + " users logged in right now.");
 };
 
 function tagSuccess() {
-	$('#tagMessageSeeker').text("You have found and TAGGED " + itUserName + "! Find out who they are in person!");
+	$('#tagMessageSeeker').text("You have found and TAGGED " + itUserName + "! Try to find out who they are in person!");
 	$('#tagModalSeeker').modal("show");
-}
+	$('#tagDiv').hide();
+};
+
+function itTagged(name) {
+	if (isIt == true) {
+		$('#tagMessageIt').text(name + " has found and TAGGED you! Try to find out who they are in person!");
+		$('#tagModalIt').modal("show");
+		db.ref('tagger').remove();
+	}
+};
 
 $('#tagButton').on("click", function() {
 	db.ref('tagger').set(userName);
+	taggerRef = db.ref('tagger');
+	taggerRef.onDisconnect().remove();
 	tagSuccess();
 });
 
+$('#tagModalSeekerDismiss').on("click", function() {
+	$('#tagModalSeeker').modal("hide");
+});
+
+// Checks to see if a Seeker has tagged IT (by being added to the tagger object in firebase)
+db.ref('tagger').on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		var tagger = snapshot.val();
+		tagger = String(tagger);
+		itTagged(tagger);
+	}
+});
+
 // Checks to see if there are any userNames added to the 'itList' object in firebase
-db.ref('itList').on("value", function(snapshot) {
-	itList = snapshot.val();
-	itExists = true;
-});
-
-db.ref('connectedUsers').on("value", function(snapshot) {
-	if (snapshot.exists() && itChecked == false) {
-		var users = snapshot.val();
-		var usersKeys = Object.keys(users);
-		connectedUsers = Object.keys(users);
-		console.log("Total number of connected users is " + usersKeys.length);
-		console.log(users);
-		if (userName in users && isSignedIn == true && itChecked == false && itExists == true) {
-			checkIfIt();
-		}
-		else if (isIt == false && itChecked == false && itExists == true) {
-			checkIt();
-			console.log("isIT = false, itChecked = false, itExists = true");
-		}
-		else if (isIt == true) {
-			console.log("User is IT. No need to check for other ITs");
-			itChecked = true;
-		}
-		else {
-			console.log("Something went wrong when determining if there's an IT");
-		}
-	}
-	if (snapshot.exists() && itExists == true) {
-		var users = snapshot.val();
-		isItOnline(users);
-	}
-	updateUserCount();
-});
-
 db.ref('itList').on("value", function(snapshot) {
 	if (snapshot.exists()) {
 		itList = snapshot.val();
@@ -126,8 +122,27 @@ db.ref('itList').on("value", function(snapshot) {
 		itUserName = itListKeys[0];
 		console.log("It's user name is " + itUserName);
 		itExists = true;
+		checkIfIt();
 	}
-	else {
-		itExists = false;
+	else if (isSignedIn == true) {
+		addIt();
+	}
+});
+
+db.ref('connectedUsers').on("value", function(snapshot) {
+	if (snapshot.exists() && itExists == false) {
+		var users = snapshot.val();
+		var usersKeys = Object.keys(users);
+		connectedUsers = usersKeys.length;
+		console.log("Total number of connected users is " + usersKeys.length);
+		updateUserCount();
+	}
+	else if (snapshot.exists() && itExists == true) {
+		var users = snapshot.val();
+		var usersKeys = Object.keys(users);
+		connectedUsers = usersKeys.length;
+		console.log("Total number of connected users is " + usersKeys.length);
+		updateUserCount();
+		isItOnline(users);
 	}
 });
