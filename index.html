@@ -128,14 +128,16 @@
 </div>
 
 <div class="container" id="itScreen">
+	
+	<div class="col-xs-12">
+		<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
+		<div id="connectedUsersIt"></div>
 
-	<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
-	<div id="connectedUsersIt"></div>
-
-	<div id="crumbButton">
-		<div class="row">
-			<div class="col-xs-12">
-				<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
+		<div id="crumbButton">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -175,8 +177,26 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="tagModalIt" tabindex="-1" role="dialog" aria-labelledby="tagModalItLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">You've Been Tagged!</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<!-- Empty Div for displaying a message regarding which user tagged IT -->
+						<div class="col-xs-12 text-center" id="tagMessageIt"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="submit-crumb">Okay</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
 
 <div class="container" id="seekerScreen">
 	<div class="col-xs-12">
@@ -190,14 +210,31 @@
 
 	<!-- TAG button that displays when the user is close to IT -->
 	<div class="col-xs-12" id="tagDiv">
-		
 		<!-- Empty div for displaying a message when user is close to IT -->
 		<div id="tagMessage"></div>
 		<!-- A button for the user to click to 'tag' IT -->
 		<button class="btn btn-success" id="tagButton">TAG IT</button>
-
 	</div>
 
+	<div class="modal fade" id="tagModalSeeker" tabindex="-1" role="dialog" aria-labelledby="tagModalSeekerLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="myModalSeekerLabel">You've Found IT!</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<!-- Empty Div for displaying a message regarding which user tagged IT -->
+						<div class="col-xs-12 text-center" id="tagMessageSeeker"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 	<!-- Script link for Firebase -->

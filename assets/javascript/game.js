@@ -74,6 +74,16 @@ function updateUserCount() {
 	$('#connectedUsersSeeker').text("There are " + users + " users logged in right now.");
 };
 
+function tagSuccess() {
+	$('#tagMessageSeeker').text("You have found and TAGGED " + itUserName + "! Find out who they are in person!");
+	$('#tagModalSeeker').modal("show");
+}
+
+$('#tagButton').on("click", function() {
+	db.ref('tagger').set(userName);
+	tagSuccess();
+});
+
 // Checks to see if there are any userNames added to the 'itList' object in firebase
 db.ref('itList').on("value", function(snapshot) {
 	itList = snapshot.val();
