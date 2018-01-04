@@ -12,8 +12,12 @@ var pos = {};
 var posIt = {};
 // Location Update Timer
 var locationTimer;
-// Distance between the user and it
+// Distance between the user and IT in miles
 var distanceToIt;
+// Distance between the user and IT in meters
+var distanceToItMeters
+// Target distance for being able to TAG IT
+var targetDistance = 0.001;
 
 // Function that initializes the map
 function initMap() {
@@ -110,6 +114,15 @@ function updateLocation() {
 	if (isIt == false) {
 		getDistance();
 		updateItDistance();
+		checkTagDistance();
+	}
+}
+
+function checkTagDistance() {
+	if (distanceToItMeters < targetDistance && itOnlineStatus == true) {
+		console.log(userName + " is close enough to TAG IT!");
+		$('#tagMessage').text("You are CLOSE enough to it!");
+		showTagDiv();
 	}
 }
 
@@ -226,9 +239,11 @@ var getDistance = function() {
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 	var d = R * c; // d = distance in meters
 	var m = d * 0.00062137; // Convert meters to miles
+	distanceToItMeters = d;
 	distanceToIt = m.toFixed(2);
-	return m.toFixed(2); // returns the distance in miles
+	console.log(d);
 	updateItDistance();
+	return m.toFixed(2); // returns the distance in miles
 }
 
 $("#submit-crumb").on("click", function() {

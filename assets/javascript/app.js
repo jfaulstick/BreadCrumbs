@@ -84,6 +84,14 @@ function hideSeekerScreen() {
 	$("#seekerScreen").hide();
 }
 
+function showTagDiv() {
+	$("#tagDiv").show();
+}
+
+function hideTagDiv() {
+	$("#tagDiv").hide();
+}
+
 function displayScreen() {
 	hideLoginButton();
 	hideRegisterButton();
@@ -306,6 +314,7 @@ hideItScreen();
 hideSeekerScreen();
 hideLogoutButton();
 showLoginScreen();
+hideTagDiv();
 
 // Get the total number of users
 db.ref().on("value", function(snapshot) {
