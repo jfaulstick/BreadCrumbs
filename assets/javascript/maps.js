@@ -8,6 +8,8 @@ var crumbsToShow = 10;
 var markersArray = [];
 // Array for handling the user's position
 var pos = {};
+// Location Update Timer
+var locationTimer;
 
 // Function that initializes the map
 function initMap() {
@@ -76,6 +78,36 @@ function getLocation() {
 	}
 }
 
+// Updates firebase with current user's pos location.
+function setLocation() {
+	if (isSignedIn) {
+		db.ref().child('connectedUsers/' + userName + '/pos/lat').set(pos.lat);
+		db.ref().child('connectedUsers/' + userName + '/pos/lng').set(pos.lng);
+		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
+	}
+	else {
+		console.log("ERROR: Tried to set geolocation while not signed in.");
+	}
+}
+
+// Gets the user's location and updates it in firebase.
+function updateLocation() {
+	console.log("Updating Location");
+	getLocation();
+	setLocation();
+}
+
+// Updates the user's location on a set interval if signed in.
+function setLocationTimer() {
+	if (isSignedIn === true) {
+		console.log("Starting location update timer.");
+		locationTimer = setInterval(updateLocation, locationInterval);
+	}
+	else {
+		console.log("Not signed in. Location not registered");
+	}
+}
+
 // Removes the markers stored in markersArray from the map.
 function clearOverlays() {
 	for (i = 0; i < markersArray.length; i++) {
@@ -117,16 +149,30 @@ function addCrumb(lat, lng) {
 }
 
 // Adds a new map marker to the map
-function addMarker(lat, lng) {
+function addMarker(lat, lng, feature) {
 	// Sets marker latitude and longitude
 	var myLatLng = {lat: lat, lng: lng};
+
+	// Icons based on type for the map
+	var icons = {
+		breadcrumb: {
+			url: 'assets/images/bread-flat.png',
+			scaledSize: new google.maps.Size(30, 30),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(0, 15),
+			title: 'Breadcrumb',
+		}
+	};
 
 	var marker = new google.maps.Marker({
 		position: myLatLng,
 		map: map,
-		title: 'Breadcrumb'
+		icon: icons[feature],
+		title: icons[feature].title
 	});
+
 	markersArray.push(marker);
+	console.log(marker);
 }
 
 // Submits a new breadcrumb at the device's geolocation
@@ -166,7 +212,8 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 		for (i = 0; i < crumbList.length; i++) {
 			var lat = crumbList[i].lat;
 			var lng = crumbList[i].lng;
-			addMarker(lat, lng);
+			var type = 'breadcrumb';
+			addMarker(lat, lng, type);
 			console.log("Adding breadcrumb in index " + i + " at Lat: " + lat + " / Lng: " + lng);
 		}
 	}
