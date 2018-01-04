@@ -108,8 +108,7 @@ function updateLocation() {
 
 	if (isIt == false) {
 		getDistance();
-		$("#itDistance").text("You are " + distanceToIt + " miles from IT's last known location.");
-		console.log("User is " + distanceToIt + " miles from IT's last known location.");
+		updateItDistance();
 	}
 }
 
