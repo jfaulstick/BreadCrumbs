@@ -108,6 +108,7 @@ function updateLocation() {
 
 	if (isIt == false) {
 		getDistance();
+		$("#itDistance").text("You are " + distanceToIt + " miles from IT's last known location.");
 		console.log("User is " + distanceToIt + " miles from IT's last known location.");
 	}
 }
@@ -191,6 +192,18 @@ function addMarker(lat, lng, feature) {
 	markersArray.push(marker);
 }
 
+// Updates the Seeker screen to show distance to IT's location
+function updateItDistance() {
+	if (itOnlineStatus == true) {
+		$('#itDistance').text("You are " + distanceToIt + " miles from IT's current location.");
+		console.log("User is " + distanceToIt + " miles from IT's current location.");
+	}
+	else {
+		$('#itDistance').text("You are " + distanceToIt + " miles from IT's last known location.");
+		console.log("User is " + distanceToIt + " miles from IT's last known location.");
+	}
+}
+
 // Use the Haversine formula to detect distance in meters between two coordinates
 var rad = function(x) {
 	return x * Math.PI / 180;
@@ -206,7 +219,7 @@ var getDistance = function() {
 	var m = d * 0.00062137; // Convert meters to miles
 	distanceToIt = m.toFixed(2);
 	return m.toFixed(2); // returns the distance in miles
-	console.log("User is " + distanceToIt + " miles from IT's last known location.");
+	updateItDistance();
 }
 
 $("#submit-crumb").on("click", function() {

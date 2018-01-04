@@ -6,6 +6,10 @@ var isIt = new Boolean(false);
 var itList = [];
 // Boolean for seeing if 'It' has been checked for upon login
 var itChecked = new Boolean(false);
+// Stores IT's username
+var itUserName;
+// Boolean for checking to see if 'It' is online.
+var itOnlineStatus = new Boolean(false);
 
 // Checks to see if an 'It' user exists
 function checkIt() {
@@ -47,6 +51,20 @@ function addIt() {
 	}
 };
 
+function isItOnline(users) {
+	console.log(users);
+	if (itUserName in users) {
+		itOnlineStatus = true;
+		console.log("IT is online!");
+		$('#itOnlineStatus').text("IT is online!");
+	}
+	else {
+		itOnlineStatus = false;
+		console.log ("IT is NOT online!");
+		$('#itOnlineStatus').text("IT is NOT online!");
+	}
+};
+
 // Checks to see if there are any userNames added to the 'itList' object in firebase
 db.ref('itList').on("value", function(snapshot) {
 	itList = snapshot.val();
@@ -72,11 +90,17 @@ db.ref('connectedUsers').on("value", function(snapshot) {
 			console.log("Something went wrong when determining if there's an IT");
 		}
 	}
+	if (itExists == true) {
+		isItOnline(users);
+	}
 });
 
 db.ref('itList').on("value", function(snapshot) {
 	if (snapshot.exists()) {
 		itList = snapshot.val();
+		var itListKeys = Object.keys(itList);
+		itUserName = itListKeys[0];
+		console.log("It's user name is " + itUserName);
 		itExists = true;
 	}
 	else {

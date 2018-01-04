@@ -152,6 +152,11 @@ function clearLoginForm() {
 	$("#login-password").val("");
 }
 
+function setUserName(email) {
+	var userNameUncased = email.substr(0, email.indexOf('@'));
+		userName = userNameUncased.toLowerCase();
+}
+
 // Section 3:
 // functions
 // =============================================================================
@@ -174,7 +179,7 @@ $("#user-Login").on("click", function(event){
 
 	if (loginEmail !== "" && loginPassword !== "") {
 
-		userName = loginEmail.substr(0, loginEmail.indexOf('@'));
+		setUserName(loginEmail);
 
 		// pass user login info to firebase
 		firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword).catch(function(error) {
@@ -213,7 +218,7 @@ $("#user-SignUp").on("click", function(event){
 
 	if (name !== "" && userEmail !== "" && userPassword !== "") {
 
-		userName = userEmail.substr(0, userEmail.indexOf('@'));
+		setUserName(userEmail);
 
 		// tests and debugging
 		console.log(userName);
