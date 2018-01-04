@@ -10,6 +10,8 @@ var itChecked = new Boolean(false);
 var itUserName;
 // Boolean for checking to see if 'It' is online.
 var itOnlineStatus = new Boolean(false);
+// Total number of connected users
+var connectedUsers = 0;
 
 // Checks to see if an 'It' user exists
 function checkIt() {
@@ -65,6 +67,13 @@ function isItOnline(users) {
 	}
 };
 
+function updateUserCount() {
+	var users = connectedUsers.length;
+	var usersIt = users - 1;
+	$('#connectedUsersIt').text("There are " + usersIt + " seekers logged in and looking for you!");
+	$('#connectedUsersSeeker').text("There are " + users + " users logged in right now.");
+};
+
 // Checks to see if there are any userNames added to the 'itList' object in firebase
 db.ref('itList').on("value", function(snapshot) {
 	itList = snapshot.val();
@@ -74,6 +83,9 @@ db.ref('itList').on("value", function(snapshot) {
 db.ref('connectedUsers').on("value", function(snapshot) {
 	if (snapshot.exists() && itChecked == false) {
 		var users = snapshot.val();
+		var usersKeys = Object.keys(users);
+		connectedUsers = Object.keys(users);
+		console.log("Total number of connected users is " + usersKeys.length);
 		console.log(users);
 		if (userName in users && isSignedIn == true && itChecked == false && itExists == true) {
 			checkIfIt();
@@ -90,9 +102,11 @@ db.ref('connectedUsers').on("value", function(snapshot) {
 			console.log("Something went wrong when determining if there's an IT");
 		}
 	}
-	if (itExists == true) {
+	if (snapshot.exists() && itExists == true) {
+		var users = snapshot.val();
 		isItOnline(users);
 	}
+	updateUserCount();
 });
 
 db.ref('itList').on("value", function(snapshot) {
