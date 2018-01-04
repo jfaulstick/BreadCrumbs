@@ -6,16 +6,20 @@ var crumbList = new Array();
 var crumbsToShow = 10;
 // Array to hold the google map markers
 var markersArray = [];
-// Array for handling the user's position
+// Object for handling the user's position
 var pos = {};
+// Object for handling It's position
+var posIt = {};
 // Location Update Timer
 var locationTimer;
+// Distance between the user and it
+var distanceToIt;
 
 // Function that initializes the map
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: -34.397, lng: 150.644},
-		zoom: 8,
+		zoom: 9,
 		streetViewControl: false
 });
 
@@ -51,7 +55,7 @@ function mapCenter() {
 }
 
 function logLocation(lat, lng) {
-	console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
+	// console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
 }
 
 // Updates variable pos with the user's current geolocation coordinates
@@ -66,7 +70,6 @@ function getLocation() {
 			};
 
 			logLocation(pos.lat, pos.lng);
-			console.log(pos);
 			// return pos;
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -80,7 +83,14 @@ function getLocation() {
 
 // Updates firebase with current user's pos location.
 function setLocation() {
-	if (isSignedIn) {
+	if (isSignedIn == true && isIt == true) {
+		db.ref().child('connectedUsers/' + userName + '/pos/lat').set(pos.lat);
+		db.ref().child('connectedUsers/' + userName + '/pos/lng').set(pos.lng);
+		db.ref().child('itList/' + userName + '/pos/lat').set(pos.lat);
+		db.ref().child('itList/' + userName + '/pos/lng').set(pos.lng);
+		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
+	}
+	else if (isSignedIn == true && isIt == false) {
 		db.ref().child('connectedUsers/' + userName + '/pos/lat').set(pos.lat);
 		db.ref().child('connectedUsers/' + userName + '/pos/lng').set(pos.lng);
 		console.log("Updated user location to " + pos.lat + " / " + pos.lng);
@@ -95,6 +105,11 @@ function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+
+	if (isIt == false) {
+		getDistance();
+		console.log("User is " + distanceToIt + " miles from IT's last known location.");
+	}
 }
 
 // Updates the user's location on a set interval if signed in.
@@ -126,10 +141,12 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 }
 
 // Adds new breadcrumb to breadcrumbList object in Firebase
-function addCrumb(lat, lng) {
+function addCrumb(user, lat, lng, url) {
 	var breadcrumb = {
+		user: userName,
 		lat: lat,
-		lng: lng
+		lng: lng,
+		url: url
 	};
 
 	// If there are fewer index entries than the variable crumbsToShow, just add the new breadcrumb
@@ -172,32 +189,43 @@ function addMarker(lat, lng, feature) {
 	});
 
 	markersArray.push(marker);
-	console.log(marker);
 }
 
-// Submits a new breadcrumb at the device's geolocation
-$("#autoCrumbInput").on("click", function() {
-	getLocation();
+// Use the Haversine formula to detect distance in meters between two coordinates
+var rad = function(x) {
+	return x * Math.PI / 180;
+};
 
-	addCrumb(pos.lat, pos.lng);
-	console.log("New auto breadcrumb added at Lat: " + lat + " / Lng " + lng);
-})
+var getDistance = function() {
+	var R = 6378137; // Earth's mean radius in meters
+	var dLat = rad(posIt.lat - pos.lat);
+	var dLng = rad(posIt.lng - pos.lng);
+	var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(pos.lat)) * Math.cos(rad(posIt.lat)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	var d = R * c; // d = distance in meters
+	var m = d * 0.00062137; // Convert meters to miles
+	distanceToIt = m.toFixed(2);
+	return m.toFixed(2); // returns the distance in miles
+	console.log("User is " + distanceToIt + " miles from IT's last known location.");
+}
 
-// Submits a new breadcrumb with lat / lng manually entered in a form
-$("#manualCrumbInput").on("click", function() {
-	var lat = parseFloat($("#lat").val().trim());
-	var lng = parseFloat($("#lng").val().trim());
-
-	if (lat == "" || lng == "") {
-		$("#crumbFormMsg").text("All fields must have proper values inputted.");
-	} 
-	else {
-		// Calls function to add the crumb to Firebase
-		addCrumb(lat, lng);
-
-		console.log("New manual breadcrumb at Lat: " + lat + " / Lng " + lng);
-		$("#crumbFormMsg").empty();
+$("#submit-crumb").on("click", function() {
+	if (imageReady == true) {
+		$("#modalImage").empty();
+		$("#crumbMsg").empty();
+		$("#myModal").modal("hide");
+		imageReady = false;
+		getLocation();
+		addCrumb(userName, pos.lat, pos.lng, url);
 	}
+	else {
+		$("#crumbMsg").text("Image Required!");
+	}
+});
+
+$("#cancel-crumb").on("click", function() {
+	$("#modalImage").empty();
+	$("#crumbMsg").empty();
 });
 
 // At Launch or when breadcrumbList is updated, adds marker for each of last 10 breadcrumbs
@@ -207,7 +235,6 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 	
 	if (snapshot.exists()) {
 		console.log("There are " + crumbList.length + " total breadcrumbs.");
-		console.log(crumbList);
 
 		for (i = 0; i < crumbList.length; i++) {
 			var lat = crumbList[i].lat;
@@ -217,5 +244,14 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 			console.log("Adding breadcrumb in index " + i + " at Lat: " + lat + " / Lng: " + lng);
 		}
 	}
+});
 
+db.ref('itList').on("value", function(snapshot) {
+	if (snapshot.exists()) {
+		var itList = snapshot.val();
+		var itListKeys = Object.keys(itList);
+		var itName = itListKeys[0];
+		posIt = itList[itName].pos;
+		console.log("IT's location is Lat: " + posIt.lat + "/ Lng: " + posIt.lng);
+	}
 });
