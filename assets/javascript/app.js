@@ -10,7 +10,7 @@ var userName;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
 // Configurable location update time interval in milliseconds
-var locationInterval = 30000;
+var locationInterval = 10000;
 // For setting the connected user reference
 var userRef;
 // Global variable for storing URL of last uploaded image

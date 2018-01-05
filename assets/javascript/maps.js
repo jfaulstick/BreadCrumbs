@@ -4,8 +4,12 @@ var infoWindow;
 var crumbList = new Array();
 // Configurable value to control how many breadcrumbs are shown
 var crumbsToShow = 10;
-// Array to hold the google map markers
+// Array to hold the breadcrumb markers
 var markersArray = [];
+// Array for handling the user's location markers
+var locationArray = [];
+// Boolean for tracking whether the user's location has been initially logged
+var locationLogged = new Boolean(false);
 // Object for handling the user's position
 var pos = {};
 // Object for handling It's position
@@ -109,6 +113,7 @@ function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+	removeLocationMarker();
 	addMarker(pos.lat, pos.lng, 'userLocation');
 
 	if (isIt == false) {
@@ -211,7 +216,19 @@ function addMarker(lat, lng, feature) {
 		title: icons[feature].title
 	});
 
-	markersArray.push(marker);
+	if (feature == 'breadcrumb') {
+		markersArray.push(marker);
+	}
+	else {
+		locationArray.push(marker);
+	}
+}
+
+function removeLocationMarker() {
+	if (locationLogged == true) {
+		locationArray[0].setMap(null);
+		locationArray[0] = null;
+	}
 }
 
 // Updates the Seeker screen to show distance to IT's location
