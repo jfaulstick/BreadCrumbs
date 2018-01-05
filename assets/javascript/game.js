@@ -99,6 +99,7 @@ function itTagged(name) {
 };
 
 function generateCrumbs() {
+	$('.breadcrumbList').empty();
 	for (i = 0; i < crumbList.length; i++) {
 		var lat = crumbList[i].lat;
 		var lng = crumbList[i].lng;
