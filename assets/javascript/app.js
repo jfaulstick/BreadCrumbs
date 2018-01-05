@@ -33,9 +33,6 @@ var config = {
     messagingSenderId: "769979061333"
   };
 firebase.initializeApp(config);
-
-// OpenWeathermap API Key
-var weatherAPI = "7ba14572e11469af41df5fe3e624d755";
   
 var db = firebase.database();
 var auth = firebase.auth();
