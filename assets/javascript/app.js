@@ -39,7 +39,7 @@ var weatherAPI = "7ba14572e11469af41df5fe3e624d755";
   
 var db = firebase.database();
 var auth = firebase.auth();
-var user = firebase.auth().currentUser;
+// var user = firebase.auth().currentUser;
 
 function showLoginScreen() {
 	$("#loginScreen").show();
@@ -225,19 +225,29 @@ $("#user-Login").on("click", function(event){
 		  console.log(errorMessage);
 		});
 
-		setUser();
-		checkUser();
+		auth.onAuthStateChanged(function(user){
+		if (user) {
+			console.log("You are signed in");
+			console.log(user);
+			setUser();
+			// Get latest location and update firebase with user's lat and lng
+			updateLocation();
+			// Starts location update timer
+			setLocationTimer();
+			$("#loginModal").modal("hide");
+			checkUser();
+		} else {
+			console.log("Your are not signed in");
+			console.log("Please log in");
+		}
+	});
 
-		// Get latest location and update firebase with user's lat and lng
-		updateLocation();
-		// Starts location update timer
-		setLocationTimer();
-		$("#loginModal").modal("hide");
 	}
 	else {
 		console.log("Login form missing some information.");
 		$("#loginMessage").text("No fields can be empty!");
 	}
+	
 });
 
 // CREATE USER:
@@ -274,17 +284,23 @@ $("#user-SignUp").on("click", function(event){
 		db.ref().child('users/' + userName + '/email').set(userEmail);
 		
 		// Create user in firebase authentication
-		auth.createUserWithEmailAndPassword(userEmail, userPassword);
-
-		// Firebase tests and debugging
-		setUser();
-		checkUser();
+		auth.createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+		});
 		
 		// Use firebase authentication listner to show current logged in user
 		auth.onAuthStateChanged(function(user){
 			if (user) {
 				console.log("You are signed in");
 				console.log(user);
+				setUser();
+				// Get latest location and update firebase with user's lat and lng
+				updateLocation();
+				// Starts location update timer
+				setLocationTimer();
+				$("#loginModal").modal("hide");
+				checkUser();
 			} else {
 				console.log("Your are not signed in");
 				console.log("Please log in");

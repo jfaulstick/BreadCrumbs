@@ -98,35 +98,6 @@ function itTagged(name) {
 	}
 };
 
-// function testAjax() {
-// 	var param = {
-// 		"one": {
-// 			lastName: "Doe", 
-// 			firstName: "John"
-// 		},
-// 		"two": {
-// 			lastName: "Doe",
-// 			firstName: "Jane"
-// 		}
-// 	};
-
-// 	var url = config.databaseURL + "/testAjax/users/.json";
-
-// 	$.ajax({
-// 		url: url,
-// 		type: "POST",
-// 		data: JSON.stringify(param),
-// 		success: function() {
-// 			alert("success");
-// 		},
-// 		error: function(error) {
-// 			alert("error: " +error);
-// 		}
-// 	}).done(function(response) {
-// 		console.log(response.name);
-// 	});
-// }
-
 $('#tagButton').on("click", function() {
 	db.ref('tagger').set(userName);
 	taggerRef = db.ref('tagger');
