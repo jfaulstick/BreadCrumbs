@@ -224,20 +224,28 @@ $("#user-Login").on("click", function(event){
 		  console.log(errorCode);
 		  console.log(errorMessage);
 		});
-
-		setUser();
-		checkUser();
-
-		// Get latest location and update firebase with user's lat and lng
-		updateLocation();
-		// Starts location update timer
-		setLocationTimer();
-		$("#loginModal").modal("hide");
 	}
 	else {
 		console.log("Login form missing some information.");
 		$("#loginMessage").text("No fields can be empty!");
 	}
+
+	auth.onAuthStateChanged(function(user){
+		if (user) {
+			console.log("You are signed in");
+			console.log(user);
+			setUser();
+			// Get latest location and update firebase with user's lat and lng
+			updateLocation();
+			// Starts location update timer
+			setLocationTimer();
+			$("#loginModal").modal("hide");
+			checkUser();
+		} else {
+			console.log("Your are not signed in");
+			console.log("Please log in");
+		}
+	});
 });
 
 // CREATE USER:
@@ -274,17 +282,23 @@ $("#user-SignUp").on("click", function(event){
 		db.ref().child('users/' + userName + '/email').set(userEmail);
 		
 		// Create user in firebase authentication
-		auth.createUserWithEmailAndPassword(userEmail, userPassword);
-
-		// Firebase tests and debugging
-		setUser();
-		checkUser();
+		auth.createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+		});
 		
 		// Use firebase authentication listner to show current logged in user
 		auth.onAuthStateChanged(function(user){
 			if (user) {
 				console.log("You are signed in");
 				console.log(user);
+				setUser();
+				// Get latest location and update firebase with user's lat and lng
+				updateLocation();
+				// Starts location update timer
+				setLocationTimer();
+				$("#loginModal").modal("hide");
+				checkUser();
 			} else {
 				console.log("Your are not signed in");
 				console.log("Please log in");
