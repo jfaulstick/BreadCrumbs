@@ -10,9 +10,11 @@ var userName;
 // Boolean for tracking whether or not the browser is signed in as a user
 var isSignedIn = false;
 // Configurable location update time interval in milliseconds
-var locationInterval = 30000;
+var locationInterval = 10000;
 // For setting the connected user reference
 var userRef;
+// The user's dynamic key in firebase
+var userKey;
 // Global variable for storing URL of last uploaded image
 var url;
 // Global variable for tracking whether an image is ready
@@ -31,6 +33,9 @@ var config = {
     messagingSenderId: "320278007810"
   };
 firebase.initializeApp(config);
+
+// OpenWeathermap API Key
+var weatherAPI = "7ba14572e11469af41df5fe3e624d755";
   
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -165,6 +170,26 @@ function connectUser() {
 	userRef = db.ref('connectedUsers').child(userName);
 	userRef.onDisconnect().remove();
 	// console.log("User ref set to " + userRef);
+}
+
+function disconnectUser() {
+	if (isSignedIn == true) {
+		$.ajax({
+			url: config.databaseURL + "/testAjax/users/" + userKey.name + "/.json",
+			data: userKey,
+			type: "DELETE",
+			success: function() {
+				console.log(userName + " at key " + userKey + " erased from Firebase");
+			},
+			error: function(error) {
+				console.log("error: " +error);
+			}
+		});
+		return null;
+	}
+	else {
+		return null;
+	}
 }
 
 function clearRegisterForm() {

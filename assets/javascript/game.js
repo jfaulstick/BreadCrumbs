@@ -10,6 +10,8 @@ var itChecked = new Boolean(false);
 var itUserName;
 // Boolean for checking to see if 'It' is online.
 var itOnlineStatus = new Boolean(false);
+// Stores the last date that IT connected
+var itConnectedTime;
 // Total number of connected users
 var connectedUsers = 0;
 
@@ -70,7 +72,9 @@ function isItOnline(users) {
 	else {
 		itOnlineStatus = false;
 		console.log ("IT is NOT online!");
-		$('#itOnlineStatus').text("IT is NOT online!");
+		var delta = moment(itConnectedTime, "YYYYMMDDHmmss").fromNow();
+		console.log(delta);
+		$('#itOnlineStatus').text("IT was last online " + delta);
 	}
 };
 
@@ -93,6 +97,35 @@ function itTagged(name) {
 		db.ref('tagger').remove();
 	}
 };
+
+// function testAjax() {
+// 	var param = {
+// 		"one": {
+// 			lastName: "Doe", 
+// 			firstName: "John"
+// 		},
+// 		"two": {
+// 			lastName: "Doe",
+// 			firstName: "Jane"
+// 		}
+// 	};
+
+// 	var url = config.databaseURL + "/testAjax/users/.json";
+
+// 	$.ajax({
+// 		url: url,
+// 		type: "POST",
+// 		data: JSON.stringify(param),
+// 		success: function() {
+// 			alert("success");
+// 		},
+// 		error: function(error) {
+// 			alert("error: " +error);
+// 		}
+// 	}).done(function(response) {
+// 		console.log(response.name);
+// 	});
+// }
 
 $('#tagButton').on("click", function() {
 	db.ref('tagger').set(userName);
@@ -123,6 +156,8 @@ db.ref('itList').on("value", function(snapshot) {
 		console.log("It's user name is " + itUserName);
 		itExists = true;
 		checkIfIt();
+		itConnectedTime = itList[itUserName].lastConnected;
+		console.log("IT last connected " + itConnectedTime);
 	}
 	else if (isSignedIn == true) {
 		addIt();

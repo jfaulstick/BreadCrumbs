@@ -4,8 +4,12 @@ var infoWindow;
 var crumbList = new Array();
 // Configurable value to control how many breadcrumbs are shown
 var crumbsToShow = 10;
-// Array to hold the google map markers
+// Array to hold the breadcrumb markers
 var markersArray = [];
+// Array for handling the user's location markers
+var locationArray = [];
+// Boolean for tracking whether the user's location has been initially logged
+var locationLogged = new Boolean(false);
 // Object for handling the user's position
 var pos = {};
 // Object for handling It's position
@@ -74,6 +78,7 @@ function getLocation() {
 			};
 
 			logLocation(pos.lat, pos.lng);
+			locationLogged = true;
 			// return pos;
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -104,11 +109,30 @@ function setLocation() {
 	}
 }
 
+// Sets the current time to a local variable
+function setConnectTime() {
+	var now = moment().format("YYYYMMDDHmmss");
+	console.log("Moment.js set now to " + now);
+	if (isSignedIn == true && isIt == true) {
+		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
+		db.ref().child('itList/' + userName + '/lastConnected').set(now);
+	}
+	else if (isSignedIn == true && isIt == false) {
+		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
+	}
+	else {
+		console.log("ERROR: Tried to set connection time while not signed in.");
+	}
+}
+
 // Gets the user's location and updates it in firebase.
 function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+	getLocationText();
+	removeLocationMarker();
+	setConnectTime();
 	addMarker(pos.lat, pos.lng, 'userLocation');
 
 	if (isIt == false) {
@@ -211,7 +235,19 @@ function addMarker(lat, lng, feature) {
 		title: icons[feature].title
 	});
 
-	markersArray.push(marker);
+	if (feature == 'breadcrumb') {
+		markersArray.push(marker);
+	}
+	else {
+		locationArray.push(marker);
+	}
+}
+
+function removeLocationMarker() {
+	if (locationLogged == true) {
+		locationArray[0].setMap(null);
+		locationArray = [];
+	}
 }
 
 // Updates the Seeker screen to show distance to IT's location
@@ -229,7 +265,7 @@ function updateItDistance() {
 // Use the Haversine formula to detect distance in meters between two coordinates
 var rad = function(x) {
 	return x * Math.PI / 180;
-};
+}
 
 var getDistance = function() {
 	var R = 6378137; // Earth's mean radius in meters
@@ -244,6 +280,30 @@ var getDistance = function() {
 	console.log(d);
 	updateItDistance();
 	return m.toFixed(2); // returns the distance in miles
+}
+
+function getLocationText() {
+	var userPos = pos.lat + ',' + pos.lng;
+
+	$.ajax({
+		url: 'https://maps.googleapis.com/maps/api/geocode/json',
+		data: {
+			'latlng': userPos,
+		},
+		dataType: 'json',
+		success: function(r) {
+			console.log('success', r);
+			var text = r.results[0].formatted_address;
+			setLocationText(text);
+		},
+		error: function(e) {
+			console.log('ERROR: ', e);
+		}
+	})
+}
+
+function setLocationText(text) {
+	$('#locationText').text("Current Location: " + text);
 }
 
 $("#submit-crumb").on("click", function() {
