@@ -33,9 +33,16 @@ var config = {
 firebase.initializeApp(config);
   
 <<<<<<< HEAD
+<<<<<<< HEAD
   // database reference
 =======
 >>>>>>> e8360292f1b4a440c671cf19c2c29448af2d0d92
+=======
+
+  // database reference
+=======
+
+>>>>>>> c8d80f4df93a1e6bd9254ed30b62b1a7c23486b0
 var db = firebase.database();
 	// authentication reference
 var auth = firebase.auth();
@@ -93,6 +100,14 @@ function hideSeekerScreen() {
 	$("#seekerScreen").hide();
 }
 
+function showTagDiv() {
+	$("#tagDiv").show();
+}
+
+function hideTagDiv() {
+	$("#tagDiv").hide();
+}
+
 function displayScreen() {
 	hideLoginButton();
 	hideRegisterButton();
@@ -118,6 +133,8 @@ function hideScreen() {
 function setUser() {
 	user = firebase.auth().currentUser;
 	isSignedIn = true;
+	checkIfIt();
+	checkIt();
 	connectUser();
 	displayScreen();
 }
@@ -254,6 +271,7 @@ $("#user-SignUp").on("click", function(event){
 
 	// Firebase tests and debugging
 <<<<<<< HEAD
+<<<<<<< HEAD
 	console.log(newUser.name);
 	console.log(newUser.email);
 
@@ -263,6 +281,12 @@ $("#user-SignUp").on("click", function(event){
 	setUser();
 	checkUser();
 >>>>>>> e8360292f1b4a440c671cf19c2c29448af2d0d92
+=======
+
+
+	setUser();
+	checkUser();
+>>>>>>> c8d80f4df93a1e6bd9254ed30b62b1a7c23486b0
 	
 	// Use firebase authentication listner to show current logged in user
 	auth.onAuthStateChanged(function(user){
@@ -343,7 +367,11 @@ $("#user-SignUp").on("click", function(event){
 		$("#registerMessage").text("No fields can be empty!");
 	}
 });
+<<<<<<< HEAD
 >>>>>>> 6bbb94d1e18120c3ac8b8d66498562a0bc31f626
+=======
+>>>>>>> 91539b2e44876e02763005b2057ae57f5ca2fef5
+>>>>>>> c8d80f4df93a1e6bd9254ed30b62b1a7c23486b0
 
 $("#cancel-register").on("click", function() {
 	clearRegisterForm();
@@ -366,6 +394,10 @@ $("#user-Logout").on("click", function(){
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> c8d80f4df93a1e6bd9254ed30b62b1a7c23486b0
 // 
 // Player chatbox 
 // When the users clicks the chat submit button..w
@@ -415,8 +447,12 @@ chatData.orderByChild("time").on("child_added", function(snapshot){
 	$("#chat-Messsages").scrollTop($("#chat-Messsages")[0].scrollHeight);
 });
 
+<<<<<<< HEAD
 =======
 >>>>>>> e8360292f1b4a440c671cf19c2c29448af2d0d92
+=======
+
+>>>>>>> c8d80f4df93a1e6bd9254ed30b62b1a7c23486b0
 // Section 4:
 // 
 // ================================================================================
@@ -426,6 +462,7 @@ hideItScreen();
 hideSeekerScreen();
 hideLogoutButton();
 showLoginScreen();
+hideTagDiv();
 
 // Get the total number of users
 db.ref().on("value", function(snapshot) {
