@@ -39,7 +39,7 @@ var weatherAPI = "7ba14572e11469af41df5fe3e624d755";
   
 var db = firebase.database();
 var auth = firebase.auth();
-var user = firebase.auth().currentUser;
+// var user = firebase.auth().currentUser;
 
 function showLoginScreen() {
 	$("#loginScreen").show();
@@ -224,13 +224,8 @@ $("#user-Login").on("click", function(event){
 		  console.log(errorCode);
 		  console.log(errorMessage);
 		});
-	}
-	else {
-		console.log("Login form missing some information.");
-		$("#loginMessage").text("No fields can be empty!");
-	}
 
-	auth.onAuthStateChanged(function(user){
+		auth.onAuthStateChanged(function(user){
 		if (user) {
 			console.log("You are signed in");
 			console.log(user);
@@ -246,6 +241,13 @@ $("#user-Login").on("click", function(event){
 			console.log("Please log in");
 		}
 	});
+
+	}
+	else {
+		console.log("Login form missing some information.");
+		$("#loginMessage").text("No fields can be empty!");
+	}
+	
 });
 
 // CREATE USER:
