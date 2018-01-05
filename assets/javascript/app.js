@@ -143,6 +143,10 @@ function checkUser() {
 	}
 }
 
+function setConnectTime() {
+	
+}
+
 // Adds the user's userName to the list of connectedUsers in firebase
 function connectUser() {
 	db.ref('connectedUsers').child(userName).set(true);

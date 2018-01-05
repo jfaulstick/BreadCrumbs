@@ -109,12 +109,29 @@ function setLocation() {
 	}
 }
 
+// Sets the current time to a local variable
+function setConnectTime() {
+	var now = moment().format("YYYYMMDDHmmss");
+	console.log("Moment.js set now to " + now);
+	if (isSignedIn == true && isIt == true) {
+		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
+		db.ref().child('itList/' + userName + '/lastConnected').set(now);
+	}
+	else if (isSignedIn == true && isIt == false) {
+		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
+	}
+	else {
+		console.log("ERROR: Tried to set connection time while not signed in.");
+	}
+}
+
 // Gets the user's location and updates it in firebase.
 function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
 	removeLocationMarker();
+	setConnectTime();
 	addMarker(pos.lat, pos.lng, 'userLocation');
 
 	if (isIt == false) {
