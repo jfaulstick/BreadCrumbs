@@ -50,3 +50,23 @@ h4 {
 	margin-left: 8px;
 	margin-top: 6px;
 }
+/*Google fonts class*/
+.googleFont {
+	font-family: 'Open Sans', sans-serif;
+}
+/*Button styles*/
+button {
+	font-family: 'Open Sans', sans-serif;
+}
+/*Footer styles*/
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	background-color: #666;
+	text-align: center;
+	color: #ffffff;
+	font-family: 'Open Sans', sans-serif;
+}
