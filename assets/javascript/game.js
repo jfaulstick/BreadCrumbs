@@ -14,6 +14,8 @@ var itOnlineStatus = new Boolean(false);
 var itConnectedTime;
 // Total number of connected users
 var connectedUsers = 0;
+// Tracks if an upload is done
+var uploadComplete = new Boolean(false);
 
 // Checks to see if an 'It' user exists
 function checkIt() {

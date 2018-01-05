@@ -1,8 +1,10 @@
-// Configure cloudinary
-// var cl = new cloudinary.Cloudinary({cloud_name: "djzxhcr1g", upload_preset: "dzrlj6sb"});
 var cloudName = "djzxhcr1g";
+var version;
+var id;
+var format;
+// Global variable for tracking whether an image is ready
+var uploadComplete = false;
 
-// Function to reset the placeholder image URL
 function resetURL() {
 	url = "https://res.cloudinary.com/djzxhcr1g/image/upload/v1515035725/bread-2_qyscfk.jpg";
 }
@@ -15,23 +17,22 @@ function displayModalImage(id, version, format) {
 	console.log(image);
 }
 
-$(document).ready(function() {
-  if($.fn.cloudinary_fileupload !== undefined) {
-    $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload();
-  }
-});
+$(document).ready(function() { 
+	$('.upload_form').append($.cloudinary.unsigned_upload_tag("dzrlj6sb", 
+	  { cloud_name: 'djzxhcr1g' }));
 
-$(".cloudinary-fileupload").bind('cloudinarydone', function(e, data) {
-	url = data.result.secure_url;
-	var id = data.result.public_id;
-	var version = data.result.version;
-	var format = data.result.format;
-	console.log(data);
-	console.log("Image ID: " + id);
-	console.log("Image Version: " + version);
-	console.log("Image Format: " + format);
-	console.log("Image URL: " + url);
-	imageReady = true;
-	$("#crumbMsg").empty();
-	displayModalImage(id, version, format);
+	$('.upload_field').unsigned_cloudinary_upload("dzrlj6sb", { 
+		cloud_name: 'djzxhcr1g', 
+		tags: 'browser_uploads' 
+		}, 
+		{ multiple: false 
+	}).bind('cloudinarydone', function(e, data) {
+		version = data.result.version;
+		id = data.result.public_id;
+		format = data.result.format;
+		url = "https://res.cloudinary.com/" + cloudName + "/image/upload/w_160,h_237/v" + version + "/" + id + "." + format;
+		console.log(data);
+		uploadComplete = true;
+		displayModalImage(id, version, format);
+	})
 });

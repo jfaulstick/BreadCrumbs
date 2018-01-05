@@ -173,9 +173,10 @@
 						<div class="row">
 							<form method=POST action="">
 								<div class="col-lg-12" id="cloud-upload">
-									<form>
-										<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
-					   				<form>
+									<form class="upload_form">
+										<!-- <input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;cloudinary_cors.html&quot;}"/> -->
+										<input class="upload_field" name="file" type="file"/>
+					   				</form>
 								</div>
 							</form>
 						</div>
