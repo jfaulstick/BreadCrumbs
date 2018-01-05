@@ -98,6 +98,26 @@ function itTagged(name) {
 	}
 };
 
+function generateCrumbs() {
+	for (i = 0; i < crumbList.length; i++) {
+		var lat = crumbList[i].lat;
+		var lng = crumbList[i].lng;
+		var type = 'breadcrumb';
+		var url = crumbList[i].url;
+		addMarker(lat, lng, type, url);
+		console.log("Adding breadcrumb in index " + i + " at Lat: " + lat + " / Lng: " + lng);
+
+		var crumb = $("<div class='col-xs-2 crumb' data-lat=" + lat + " data-lng=" + lng + ">");
+		var image = $("<img class='crumbImage'>");
+		$(image).attr('src', crumbList[i].url);
+		$(crumb).append(image);
+		$(crumb).data("lat", lat);
+		$(crumb).data("lng", lng);
+		$('.breadcrumbList').append(crumb);
+	}
+	$('.crumbImage').css({"height":"237px", "width":"160px"});
+}
+
 $('#tagButton').on("click", function() {
 	db.ref('tagger').set(userName);
 	taggerRef = db.ref('tagger');

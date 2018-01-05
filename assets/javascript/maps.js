@@ -6,7 +6,7 @@ var crumbList = new Array();
 var crumbsToShow = 10;
 // Array to hold the breadcrumb markers
 var markersArray = [];
-// Array for handling the user's location markers
+// Global marker variable to help with click events
 var locationArray = [];
 // Boolean for tracking whether the user's location has been initially logged
 var locationLogged = new Boolean(false);
@@ -27,7 +27,7 @@ var targetDistance = 0.001;
 function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: -34.397, lng: 150.644},
-		zoom: 9,
+		zoom: 17,
 		streetViewControl: false
 });
 
@@ -178,7 +178,7 @@ function addCrumb(user, lat, lng, url) {
 		lng: lng,
 		url: url
 	};
-	
+
 	// If there are fewer index entries than the variable crumbsToShow, just add the new breadcrumb
 	if (!crumbList) {
 		crumbList = new Array(breadcrumb);
@@ -196,7 +196,7 @@ function addCrumb(user, lat, lng, url) {
 }
 
 // Adds a new map marker to the map
-function addMarker(lat, lng, feature) {
+function addMarker(lat, lng, feature, image) {
 	// Sets marker latitude and longitude
 	var myLatLng = {lat: lat, lng: lng};
 
@@ -224,7 +224,8 @@ function addMarker(lat, lng, feature) {
 		position: myLatLng,
 		map: map,
 		icon: icons[feature],
-		title: icons[feature].title
+		title: icons[feature].title,
+		image: image
 	});
 
 	if (feature == 'breadcrumb') {
@@ -296,6 +297,14 @@ function setLocationText(text) {
 	$('#locationText').text("Current Location: " + text);
 }
 
+$('.breadcrumbList').on("click", ".crumb", function() {
+	var lat = $(this).attr('data-lat');
+	var lng = $(this).attr('data-lng');
+	var latLng = new google.maps.LatLng(lat, lng);
+	map.setCenter(latLng);
+	console.log("Centering map to Lat: " + lat + " / Lng: " + lng);
+});
+
 $("#submit-crumb").on("click", function() {
 	$("#modalImage").empty();
 	$("#crumbMsg").empty();
@@ -317,14 +326,8 @@ db.ref('breadcrumbList').on("value", function(snapshot) {
 	
 	if (snapshot.exists()) {
 		console.log("There are " + crumbList.length + " total breadcrumbs.");
-
-		for (i = 0; i < crumbList.length; i++) {
-			var lat = crumbList[i].lat;
-			var lng = crumbList[i].lng;
-			var type = 'breadcrumb';
-			addMarker(lat, lng, type);
-			console.log("Adding breadcrumb in index " + i + " at Lat: " + lat + " / Lng: " + lng);
-		}
+		// Function that generates the crumb list on the map and Seeker page
+		generateCrumbs();
 	}
 });
 
