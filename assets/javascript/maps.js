@@ -4,8 +4,12 @@ var infoWindow;
 var crumbList = new Array();
 // Configurable value to control how many breadcrumbs are shown
 var crumbsToShow = 10;
-// Array to hold the google map markers
+// Array to hold the breadcrumb markers
 var markersArray = [];
+// Array for handling the user's location markers
+var locationArray = [];
+// Boolean for tracking whether the user's location has been initially logged
+var locationLogged = new Boolean(false);
 // Object for handling the user's position
 var pos = {};
 // Object for handling It's position
@@ -74,6 +78,7 @@ function getLocation() {
 			};
 
 			logLocation(pos.lat, pos.lng);
+			locationLogged = true;
 			// return pos;
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -104,11 +109,29 @@ function setLocation() {
 	}
 }
 
+// Sets the current time to a local variable
+function setConnectTime() {
+	var now = moment().format("YYYYMMDDHmmss");
+	console.log("Moment.js set now to " + now);
+	if (isSignedIn == true && isIt == true) {
+		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
+		db.ref().child('itList/' + userName + '/lastConnected').set(now);
+	}
+	else if (isSignedIn == true && isIt == false) {
+		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
+	}
+	else {
+		console.log("ERROR: Tried to set connection time while not signed in.");
+	}
+}
+
 // Gets the user's location and updates it in firebase.
 function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+	removeLocationMarker();
+	setConnectTime();
 	addMarker(pos.lat, pos.lng, 'userLocation');
 
 	if (isIt == false) {
@@ -211,7 +234,19 @@ function addMarker(lat, lng, feature) {
 		title: icons[feature].title
 	});
 
-	markersArray.push(marker);
+	if (feature == 'breadcrumb') {
+		markersArray.push(marker);
+	}
+	else {
+		locationArray.push(marker);
+	}
+}
+
+function removeLocationMarker() {
+	if (locationLogged == true) {
+		locationArray[0].setMap(null);
+		locationArray = [];
+	}
 }
 
 // Updates the Seeker screen to show distance to IT's location
