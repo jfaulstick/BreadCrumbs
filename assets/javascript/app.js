@@ -86,6 +86,14 @@ function hideSeekerScreen() {
 	$("#seekerScreen").hide();
 }
 
+function showGlobalScreen() {
+	$("#globalScreen").show();
+}
+
+function hideGlobalScreen() {
+	$("#globalScreen").hide();
+}
+
 function showTagDiv() {
 	$("#tagDiv").show();
 }
@@ -98,6 +106,7 @@ function displayScreen() {
 	hideLoginButton();
 	hideRegisterButton();
 	showLogoutButton();
+	showGlobalScreen();
 	if (isIt == true) {
 		showItScreen();
 	}
@@ -110,6 +119,7 @@ function hideScreen() {
 	hideItScreen();
 	hideSeekerScreen();
 	hideLogoutButton();
+	hideGlobalScreen();
 	showLoginButton();
 	showRegisterButton();
 	showLoginScreen();
