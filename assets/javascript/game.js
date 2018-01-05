@@ -112,8 +112,6 @@ function generateCrumbs() {
 		var image = $("<img class='crumbImage'>");
 		$(image).attr('src', crumbList[i].url);
 		$(crumb).append(image);
-		$(crumb).data("lat", lat);
-		$(crumb).data("lng", lng);
 		$('.breadcrumbList').append(crumb);
 	}
 	$('.crumbImage').css({"height":"237px", "width":"160px"});
