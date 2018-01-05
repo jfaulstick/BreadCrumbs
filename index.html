@@ -43,224 +43,221 @@
 	</div>
 </div>
 
-<div class="container" id="loginScreen">
-	
-	<!-- This div contains the registration modal -->
-	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="registerModalLabel">Login:</h4>
-				</div>
-				<div class="modal-body">
-					<div class="panel-body">
-						<div class="messageArea">
-							<div id="registerMessage"></div>
+<div class="container" id="mainContent">
+
+	<div class="container" id="loginScreen">
+		
+		<!-- This div contains the registration modal -->
+		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" id="registerModalLabel">Login:</h4>
+					</div>
+					<div class="modal-body">
+						<div class="panel-body">
+							<div class="messageArea">
+								<div id="registerMessage"></div>
+							</div>
+							<form>
+								<!-- Input for user name -->
+								<div class="form-group">
+									<label for="users-Name">Name:</label>
+									<br>
+									<input type="text" id="userName">
+								</div>
+								<!-- Input for user Email -->
+								<div class="form-group">
+									<label for="users-email">Email:</label>
+									<br>
+									<input type="text" id="userEmail">
+								</div>
+								<!-- Input for user password -->
+								<div class="form-group">
+									<label for="users-password">Password:</label>
+									<br>
+									<input type="password" id="userPassword">
+								</div>
+
+								<button type="submit" class="btn btn-primary" id="user-SignUp">Submit</button>
+								
+							</form>
 						</div>
-						<form>
-							<!-- Input for user name -->
-							<div class="form-group">
-								<label for="users-Name">Name:</label>
-								<br>
-								<input type="text" id="userName">
-							</div>
-							<!-- Input for user Email -->
-							<div class="form-group">
-								<label for="users-email">Email:</label>
-								<br>
-								<input type="text" id="userEmail">
-							</div>
-							<!-- Input for user password -->
-							<div class="form-group">
-								<label for="users-password">Password:</label>
-								<br>
-								<input type="password" id="userPassword">
-							</div>
-
-							<button type="submit" class="btn btn-primary" id="user-SignUp">Submit</button>
-							
-						</form>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="cancel-register" data-dismiss="modal">Cancel</button>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="cancel-register" data-dismiss="modal">Cancel</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- This div contains the login modal -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="loginModalLabel">Sign Up:</h4>
-				</div>
-				<div class="modal-body">
-					<!-- This body will hold the login form -->
-					<div class="panel-body">
-						<div class="messageArea">
-							<div id="loginMessage"></div>
+		<!-- This div contains the login modal -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" id="loginModalLabel">Sign Up:</h4>
+					</div>
+					<div class="modal-body">
+						<!-- This body will hold the login form -->
+						<div class="panel-body">
+							<div class="messageArea">
+								<div id="loginMessage"></div>
+							</div>
+							<form>
+								<!-- Input for user Email -->
+								<div class="form-group">
+									<label for="login-email">Email:</label>
+									<br>
+									<input type="text" id="loginEmail">
+								</div>
+								<!-- Input for user password -->
+								<div class="form-group">
+									<label for="login-password">Password:</label>
+									<br>
+									<input type="password" id="loginPassword">
+								</div>
+
+								<button type="submit" class="btn btn-primary" id="user-Login">Login</button>
+								
+							</form>
 						</div>
-						<form>
-							<!-- Input for user Email -->
-							<div class="form-group">
-								<label for="login-email">Email:</label>
-								<br>
-								<input type="text" id="loginEmail">
-							</div>
-							<!-- Input for user password -->
-							<div class="form-group">
-								<label for="login-password">Password:</label>
-								<br>
-								<input type="password" id="loginPassword">
-							</div>
-
-							<button type="submit" class="btn btn-primary" id="user-Login">Login</button>
-							
-						</form>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="cancel-login" data-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="container" id="itScreen">
-	
-	<div class="col-xs-12">
-		<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
-		<div id="connectedUsersIt"></div>
-		<!-- Div to the existing breadcrumbs -->
-		<div class="crumbContainer">
-			<!-- The list of breadcrumbs -->
-			<div class="breadcrumbList"></div>
-		</div>
-	</div>
-
-	<div id="crumbButton">
-		<div class="row">
-			<div class="col-xs-12">
-				<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal for entering Breadcrumb information -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Add Breadcrumb</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<!-- Empty Div for dynamically populating with the image uploaded -->
-						<div class="col-xs-12" id="modalImage"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="cancel-login" data-dismiss="modal">Cancel</button>
 					</div>
-					<div class="row">
-						<!-- Empty crumb for displaying messaging -->
-						<div class="col-xs-12 text-center" id="crumbMsg"></div>
-					</div>
-					<div class="row">
-						<form method=POST action="">
-							<div class="col-lg-12" id="cloud-upload">
-								<form>
-									<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
-				   				<form>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="cancel-crumb" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" id="submit-crumb">Submit</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="modal fade" id="tagModalIt" tabindex="-1" role="dialog" aria-labelledby="tagModalItLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">You've Been Tagged!</h4>
+	<div class="container" id="itScreen">
+		
+		<div class="col-xs-12">
+			<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
+			<div id="connectedUsersIt"></div>
+			<!-- Div to the existing breadcrumbs -->
+			<div class="crumbContainer">
+				<!-- The list of breadcrumbs -->
+				<div class="breadcrumbList"></div>
+			</div>
+		</div>
+
+		<div id="crumbButton">
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
 				</div>
-				<div class="modal-body">
-					<div class="row">
-						<!-- Empty Div for displaying a message regarding which user tagged IT -->
-						<div class="col-xs-12 text-center" id="tagMessageIt"></div>
+			</div>
+		</div>
+
+		<!-- Modal for entering Breadcrumb information -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Add Breadcrumb</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<!-- Empty Div for dynamically populating with the image uploaded -->
+							<div class="col-xs-12" id="modalImage"></div>
+						</div>
+						<div class="row">
+							<!-- Empty crumb for displaying messaging -->
+							<div class="col-xs-12 text-center" id="crumbMsg"></div>
+						</div>
+						<div class="row">
+							<form method=POST action="">
+								<div class="col-lg-12" id="cloud-upload">
+									<form>
+										<input id="cloudinary-input" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data="{&quot;upload_preset&quot;: &quot;dzrlj6sb&quot;, &quot;callback&quot;: &quot;assets/cloudinary_cors.html&quot;}"/>
+					   				<form>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="cancel-crumb" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" id="submit-crumb">Submit</button>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+			</div>
+		</div>
+
+		<div class="modal fade" id="tagModalIt" tabindex="-1" role="dialog" aria-labelledby="tagModalItLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">You've Been Tagged!</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<!-- Empty Div for displaying a message regarding which user tagged IT -->
+							<div class="col-xs-12 text-center" id="tagMessageIt"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="container" id="seekerScreen">
-	<div class="col-xs-12">
-		<!-- Empty div for displaying IT's online status -->
-		<div id="itOnlineStatus"></div>
-		<!-- Empty div for displaying the proximity to IT message -->
-		<div id="itDistance"></div>
-		<!-- Empty div for displaying total users including IT -->
-		<div><span id="connectedUsersSeeker"></span></div>
-		<!-- Div to hold a generated list of breadcrumbs -->
-		<div class="crumbContainer">
-			<!-- The list of breadcrumbs -->
-			<div class="breadcrumbList"></div>
+	<div class="container" id="seekerScreen">
+		<div class="col-xs-12">
+			<!-- Empty div for displaying IT's online status -->
+			<div id="itOnlineStatus"></div>
+			<!-- Empty div for displaying the proximity to IT message -->
+			<div id="itDistance"></div>
+			<!-- Empty div for displaying total users including IT -->
+			<div><span id="connectedUsersSeeker"></span></div>
+			<!-- Div to hold a generated list of breadcrumbs -->
+			<div class="crumbContainer">
+				<!-- The list of breadcrumbs -->
+				<div class="breadcrumbList"></div>
+			</div>
 		</div>
-	</div>
 
-	<!-- TAG button that displays when the user is close to IT -->
-	<div class="col-xs-12" id="tagDiv">
-		<!-- Empty div for displaying a message when user is close to IT -->
-		<div id="tagMessage"></div>
-		<!-- A button for the user to click to 'tag' IT -->
-		<button class="btn btn-success" id="tagButton">TAG IT</button>
-	</div>
+		<!-- TAG button that displays when the user is close to IT -->
+		<div class="col-xs-12" id="tagDiv">
+			<!-- Empty div for displaying a message when user is close to IT -->
+			<div id="tagMessage"></div>
+			<!-- A button for the user to click to 'tag' IT -->
+			<button class="btn btn-success" id="tagButton">TAG IT</button>
+		</div>
 
-	<div class="modal fade" id="tagModalSeeker" tabindex="-1" role="dialog" aria-labelledby="tagModalSeekerLabel">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title" id="myModalSeekerLabel">You've Found IT!</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<!-- Empty Div for displaying a message regarding which user tagged IT -->
-						<div class="col-xs-12 text-center" id="tagMessageSeeker"></div>
+		<div class="modal fade" id="tagModalSeeker" tabindex="-1" role="dialog" aria-labelledby="tagModalSeekerLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" id="myModalSeekerLabel">You've Found IT!</h4>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="tagModalSeekerDismiss" data-dismiss="modal">Okay</button>
+					<div class="modal-body">
+						<div class="row">
+							<!-- Empty Div for displaying a message regarding which user tagged IT -->
+							<div class="col-xs-12 text-center" id="tagMessageSeeker"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="tagModalSeekerDismiss" data-dismiss="modal">Okay</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 
-<div class="container" id="globalScreen">
-	<!-- Empty div for displaying the user's current location. -->
-	<div class="col-xs-12" id="locationText"></div>
-</div>
-
-<div class="footer navbar-fixed-bottom">
-    <div class="container text-center" id="footer-text">
-      Copyright &copy; BreadCrumbs
-    </div>
+	<div class="container" id="globalScreen">
+		<!-- Empty div for displaying the user's current location. -->
+		<div class="col-xs-12" id="locationText"></div>
+	</div>
 </div>
 
 <!-- Empty div for displaying the user's current location. -->
