@@ -2,6 +2,11 @@
 // var cl = new cloudinary.Cloudinary({cloud_name: "djzxhcr1g", upload_preset: "dzrlj6sb"});
 var cloudName = "djzxhcr1g";
 
+// Function to reset the placeholder image URL
+function resetURL() {
+	url = "https://res.cloudinary.com/djzxhcr1g/image/upload/v1515035725/bread-2_qyscfk.jpg";
+}
+
 function displayModalImage(id, version, format) {
 	var image = $("<img>");
 	image.attr('src', "https://res.cloudinary.com/" + cloudName + "/image/upload/w_270,h_400/v" + version + "/" + id + "." + format);

@@ -42,8 +42,6 @@ infoWindow = new google.maps.InfoWindow;
 				lng: position.coords.longitude
 			};
 
-			logLocation(pos.lat, pos.lng);
-
 			infoWindow.setPosition(pos);
 
 			map.setCenter(pos);
@@ -62,10 +60,6 @@ function mapCenter() {
 	map.setCenter(pos);
 }
 
-function logLocation(lat, lng) {
-	// console.log("Current user's location is Lat: " + lat + " / Lng: " + lng);
-}
-
 // Updates variable pos with the user's current geolocation coordinates
 function getLocation() {
 	// Get browser Geolocation
@@ -77,7 +71,6 @@ function getLocation() {
 				lng: position.coords.longitude
 			};
 
-			logLocation(pos.lat, pos.lng);
 			locationLogged = true;
 			// return pos;
 		}, function() {
@@ -112,7 +105,6 @@ function setLocation() {
 // Sets the current time to a local variable
 function setConnectTime() {
 	var now = moment().format("YYYYMMDDHmmss");
-	console.log("Moment.js set now to " + now);
 	if (isSignedIn == true && isIt == true) {
 		db.ref().child('connectedUsers/' + userName + '/lastConnected').set(now);
 		db.ref().child('itList/' + userName + '/lastConnected').set(now);
@@ -130,7 +122,7 @@ function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
-	getLocationText();
+	getLocationText(pos.lat, pos.lng);
 	removeLocationMarker();
 	setConnectTime();
 	addMarker(pos.lat, pos.lng, 'userLocation');
@@ -186,7 +178,7 @@ function addCrumb(user, lat, lng, url) {
 		lng: lng,
 		url: url
 	};
-
+	
 	// If there are fewer index entries than the variable crumbsToShow, just add the new breadcrumb
 	if (!crumbList) {
 		crumbList = new Array(breadcrumb);
@@ -277,22 +269,20 @@ var getDistance = function() {
 	var m = d * 0.00062137; // Convert meters to miles
 	distanceToItMeters = d;
 	distanceToIt = m.toFixed(2);
-	console.log(d);
 	updateItDistance();
 	return m.toFixed(2); // returns the distance in miles
 }
 
-function getLocationText() {
-	var userPos = pos.lat + ',' + pos.lng;
+function getLocationText(lat, lng) {
+	var pos = lat + ',' + lng;
 
 	$.ajax({
 		url: 'https://maps.googleapis.com/maps/api/geocode/json',
 		data: {
-			'latlng': userPos,
+			'latlng': pos,
 		},
 		dataType: 'json',
 		success: function(r) {
-			console.log('success', r);
 			var text = r.results[0].formatted_address;
 			setLocationText(text);
 		},
@@ -307,17 +297,12 @@ function setLocationText(text) {
 }
 
 $("#submit-crumb").on("click", function() {
-	if (imageReady == true) {
-		$("#modalImage").empty();
-		$("#crumbMsg").empty();
-		$("#myModal").modal("hide");
-		imageReady = false;
-		getLocation();
-		addCrumb(userName, pos.lat, pos.lng, url);
-	}
-	else {
-		$("#crumbMsg").text("Image Required!");
-	}
+	$("#modalImage").empty();
+	$("#crumbMsg").empty();
+	$("#myModal").modal("hide");
+	imageReady = false;
+	getLocation();
+	addCrumb(userName, pos.lat, pos.lng, url);
 });
 
 $("#cancel-crumb").on("click", function() {
