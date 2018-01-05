@@ -136,18 +136,16 @@
 		<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
 		<div id="connectedUsersIt"></div>
 		<!-- Div to the existing breadcrumbs -->
-		<div id="crumbContainer">
+		<div class="crumbContainer">
 			<!-- The list of breadcrumbs -->
-			<div class="col-xs-6 breadcrumbList"></div>
-			<!-- Clicked breadcrumb image -->
-			<div class="col-xs-6 breadcrumbImage"></div>
+			<div class="breadcrumbList"></div>
 		</div>
+	</div>
 
-		<div id="crumbButton">
-			<div class="row">
-				<div class="col-xs-12">
-					<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
-				</div>
+	<div id="crumbButton">
+		<div class="row">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
 			</div>
 		</div>
 	</div>
@@ -215,9 +213,12 @@
 		<!-- Empty div for displaying the proximity to IT message -->
 		<div id="itDistance"></div>
 		<!-- Empty div for displaying total users including IT -->
-		<div id="connectedUsersSeeker"></div>
+		<div><span id="connectedUsersSeeker"></span></div>
 		<!-- Div to hold a generated list of breadcrumbs -->
-		<div class="breadcrumbList"></div>
+		<div class="crumbContainer">
+			<!-- The list of breadcrumbs -->
+			<div class="breadcrumbList"></div>
+		</div>
 	</div>
 
 	<!-- TAG button that displays when the user is close to IT -->
@@ -248,16 +249,18 @@
 		</div>
 	</div>
 </div>
-<footer>
-    <div class="container">
-      Copyright &copy; BreadCrumbs
-    </div>
-  </footer>
 
 <div class="container" id="globalScreen">
 	<!-- Empty div for displaying the user's current location. -->
 	<div class="col-xs-12" id="locationText"></div>
 </div>
+
+<div class="footer navbar-fixed-bottom">
+    <div class="container text-center" id="footer-text">
+      Copyright &copy; BreadCrumbs
+    </div>
+</div>
+
 <!-- Empty div for displaying the user's current location. -->
 
 	<!-- Script link for Firebase -->
