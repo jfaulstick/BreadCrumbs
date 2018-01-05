@@ -78,6 +78,7 @@ function getLocation() {
 			};
 
 			logLocation(pos.lat, pos.lng);
+			locationLogged = true;
 			// return pos;
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -227,7 +228,7 @@ function addMarker(lat, lng, feature) {
 function removeLocationMarker() {
 	if (locationLogged == true) {
 		locationArray[0].setMap(null);
-		locationArray[0] = null;
+		locationArray = [];
 	}
 }
 
