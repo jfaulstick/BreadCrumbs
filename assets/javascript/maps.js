@@ -130,6 +130,7 @@ function updateLocation() {
 	console.log("Updating Location");
 	getLocation();
 	setLocation();
+	getLocationText();
 	removeLocationMarker();
 	setConnectTime();
 	addMarker(pos.lat, pos.lng, 'userLocation');
@@ -264,7 +265,7 @@ function updateItDistance() {
 // Use the Haversine formula to detect distance in meters between two coordinates
 var rad = function(x) {
 	return x * Math.PI / 180;
-};
+}
 
 var getDistance = function() {
 	var R = 6378137; // Earth's mean radius in meters
@@ -279,6 +280,30 @@ var getDistance = function() {
 	console.log(d);
 	updateItDistance();
 	return m.toFixed(2); // returns the distance in miles
+}
+
+function getLocationText() {
+	var userPos = pos.lat + ',' + pos.lng;
+
+	$.ajax({
+		url: 'https://maps.googleapis.com/maps/api/geocode/json',
+		data: {
+			'latlng': userPos,
+		},
+		dataType: 'json',
+		success: function(r) {
+			console.log('success', r);
+			var text = r.results[0].formatted_address;
+			setLocationText(text);
+		},
+		error: function(e) {
+			console.log('ERROR: ', e);
+		}
+	})
+}
+
+function setLocationText(text) {
+	$('#locationText').text("Current Location: " + text);
 }
 
 $("#submit-crumb").on("click", function() {
