@@ -1,5 +1,26 @@
 h4 {
 	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	background-image: url("../images/cartographer.png");
+	background-color: #ffffff;
+}
+
+body {
+	font: ;
+}
+
+.navbar, #mapContainer, #mainContent {
+	background-image: url("../images/extra_clean_paper.png");
+}
+
+#mapContainer, #loginScreen, #itScreen, #seekerScreen,  {
+	border-radius: 16px;
 }
 
 #mainContent {
@@ -13,6 +34,10 @@ h4 {
 
 #login-Row {
 	display: none;
+}
+
+#login {
+	margin-right: 8px;
 }
 
 .messageArea {

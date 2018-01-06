@@ -294,7 +294,7 @@ function getLocationText(lat, lng) {
 }
 
 function setLocationText(text) {
-	$('#locationText').text("Current Location: " + text);
+	$('.locationText').text("Current Location: " + text);
 }
 
 $('.breadcrumbList').on("click", ".crumb", function() {

@@ -116,7 +116,7 @@ function generateCrumbs() {
 		$(crumb).append(image);
 		$('.breadcrumbList').append(crumb);
 	}
-	$('.crumbImage').css({"height":"180px", "width":"180px"});
+	$('.crumbImage').css({"height":"180px", "width":"180px", "margin-bottom":"16px", "border-radius":"32px", "padding-right":"8px"});
 }
 
 $('#tagButton').on("click", function() {
