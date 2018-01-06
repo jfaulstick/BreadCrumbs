@@ -7,19 +7,18 @@
 
 	<!-- Link to reset.css -->
 	<link rel="stylesheet" href="assets/css/reset.css">
-
 	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<!-- Link to google fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<!-- Link to style.css -->
 	<link rel="stylesheet" href="assets/css/style.css">
-
 	<!-- Link to maps.css -->
 	<link rel="stylesheet" href="assets/css/maps.css">
+	<!-- Google Font Open Sans -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
 </head>
 <body>
-
 
 <!-- Navbar -->
 <nav class="navbar navbar-default">
@@ -37,15 +36,20 @@
     <button type="button" class="btn btn-default navbar-right navbar-btn" id="login" data-toggle="modal" data-target="#loginModal">Login</button>
   </div>
 </nav>
+
 <div class="container well" id="mapContainer">
 	<div class="col-xs-12" id="mapDiv">
 		<div id="map"></div>
 	</div>
 </div>
 
-<div class="container" id="mainContent">
+<div class="container well" id="mainContent">
 
 	<div class="container" id="loginScreen">
+
+		<div class="row">
+			<div class="col-xs-12 text-center" id="greetingMessage">Welcome to Breadcrumbs!</div>
+		</div>
 		
 		<!-- This div contains the registration modal -->
 		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
@@ -136,8 +140,6 @@
 	<div class="container" id="itScreen">
 		
 		<div class="col-xs-12">
-			<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
-			<div id="connectedUsersIt"></div>
 			<!-- Div to the existing breadcrumbs -->
 			<div class="crumbContainer">
 				<!-- The list of breadcrumbs -->
@@ -151,6 +153,16 @@
 					<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
 				</div>
 			</div>
+		</div>
+
+		<div class="container">
+			<!-- Empty div for displaying the user's current location. -->
+			<div class="col-xs-12" class="locationText"></div>
+		</div>
+
+		<div class="col-xs-12">
+		<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
+			<div id="connectedUsersIt"></div>
 		</div>
 
 		<!-- Modal for entering Breadcrumb information -->
@@ -211,28 +223,39 @@
 	</div>
 
 	<div class="container" id="seekerScreen">
-		<div class="col-xs-12">
-			<!-- Empty div for displaying IT's online status -->
-			<div id="itOnlineStatus"></div>
-			<!-- Empty div for displaying the proximity to IT message -->
-			<div id="itDistance"></div>
-			<!-- Empty div for displaying total users including IT -->
-			<div><span id="connectedUsersSeeker"></span></div>
-			<!-- Div to hold a generated list of breadcrumbs -->
-			<div class="crumbContainer">
-				<!-- The list of breadcrumbs -->
-				<div class="breadcrumbList"></div>
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- Empty div to populate the breadcrumbs in -->
+				<div class="crumbContainer">
+					<!-- The list of breadcrumbs -->
+					<div class="breadcrumbList"></div>
+				</div>
 			</div>
 		</div>
-
-		<!-- TAG button that displays when the user is close to IT -->
-		<div class="col-xs-12" id="tagDiv">
-			<!-- Empty div for displaying a message when user is close to IT -->
-			<div id="tagMessage"></div>
-			<!-- A button for the user to click to 'tag' IT -->
-			<button class="btn btn-success" id="tagButton">TAG IT</button>
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- Empty div for displaying IT's online status -->
+				<div id="itOnlineStatus"></div>
+				<!-- Empty div for displaying the proximity to IT message -->
+				<div id="itDistance"></div>
+				<!-- Empty div for displaying total users including IT -->
+				<div><span id="connectedUsersSeeker"></span></div>
+				<!-- Div to hold a generated list of breadcrumbs -->
+				<!-- Empty div for displaying the user's current location. -->
+				<div class="col-xs-12" class="locationText"></div>
+			</div>
 		</div>
-
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- TAG button that displays when the user is close to IT -->
+				<div class="col-xs-12" id="tagDiv">
+					<!-- Empty div for displaying a message when user is close to IT -->
+					<div id="tagMessage"></div>
+					<!-- A button for the user to click to 'tag' IT -->
+					<button class="btn btn-success" id="tagButton">TAG IT</button>
+				</div>
+			</div>
+		</div>
 		<div class="modal fade" id="tagModalSeeker" tabindex="-1" role="dialog" aria-labelledby="tagModalSeekerLabel">
 			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
@@ -254,11 +277,6 @@
 		</div>
 	</div>
 
-
-	<div class="container" id="globalScreen">
-		<!-- Empty div for displaying the user's current location. -->
-		<div class="col-xs-12" id="locationText"></div>
-	</div>
 </div>
 
 <!-- Empty div for displaying the user's current location. -->

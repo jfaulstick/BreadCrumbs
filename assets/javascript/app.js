@@ -17,8 +17,6 @@ var userRef;
 var userKey;
 // Global variable for storing URL of last uploaded image
 var url = "https://res.cloudinary.com/djzxhcr1g/image/upload/v1515035725/bread-2_qyscfk.jpg";
-// Global variable for tracking whether an image is ready
-var imageReady = false;
 
 // Section 2:
 // Firebase CDN

@@ -1,5 +1,31 @@
 h4 {
 	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	background-image: url("../images/cartographer.png");
+	background-color: #ffffff;
+}
+
+body {
+	font: ;
+}
+
+.navbar, #mapContainer, #mainContent {
+	background-image: url("../images/extra_clean_paper.png");
+}
+
+#mapContainer, #loginScreen, #itScreen, #seekerScreen,  {
+	border-radius: 16px;
+}
+
+#mainContent {
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 #cloud-upload {
@@ -8,6 +34,10 @@ h4 {
 
 #login-Row {
 	display: none;
+}
+
+#login {
+	margin-right: 8px;
 }
 
 .messageArea {
@@ -19,6 +49,10 @@ h4 {
 	text-align: center;
 }
 
+#user-Logout {
+	margin-right: 0px;
+}
+
 #modalImage {
 	margin: auto;
 	width: 270px;
@@ -28,6 +62,12 @@ h4 {
 #crumbMsg {
 	margin: auto;
 	color: red;
+}
+
+#crumbModalBtn {
+	margin-top: 8px;
+	margin-left: 16px;
+	margin-bottom: 8px;
 }
 
 #headerId {
@@ -57,3 +97,8 @@ button {
 .googleFont {
 	font-family: 'Open Sans', sans-serif;
 } 
+
+.col-xs-2 {
+	padding-left: 0px;
+	padding-right: 0px;
+}
