@@ -139,6 +139,11 @@
 
 	<div class="container" id="itScreen">
 		
+		<div class="container">
+			<!-- Empty div for displaying the user's current location. -->
+			<div class="locationText"></div>
+		</div>
+
 		<div class="col-xs-12">
 			<!-- Div to the existing breadcrumbs -->
 			<div class="crumbContainer">
@@ -153,11 +158,6 @@
 					<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
 				</div>
 			</div>
-		</div>
-
-		<div class="container">
-			<!-- Empty div for displaying the user's current location. -->
-			<div class="col-xs-12" class="locationText"></div>
 		</div>
 
 		<div class="col-xs-12">
@@ -223,6 +223,13 @@
 	</div>
 
 	<div class="container" id="seekerScreen">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- Empty div for displaying the user's current location. -->
+				<div class="locationText"></div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-xs-12">
 				<!-- Empty div to populate the breadcrumbs in -->
@@ -240,11 +247,8 @@
 				<div id="itDistance"></div>
 				<!-- Empty div for displaying total users including IT -->
 				<div><span id="connectedUsersSeeker"></span></div>
-				<!-- Div to hold a generated list of breadcrumbs -->
-				<!-- Empty div for displaying the user's current location. -->
-				<div class="col-xs-12" class="locationText"></div>
 				<!-- TAG button that displays when the user is close to IT -->
-				<div class="col-xs-12" id="tagDiv">
+				<div id="tagDiv">
 					<!-- Empty div for displaying a message when user is close to IT -->
 					<div id="tagMessage"></div>
 					<!-- A button for the user to click to 'tag' IT -->

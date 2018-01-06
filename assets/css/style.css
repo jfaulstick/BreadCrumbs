@@ -44,6 +44,10 @@ body {
 	height: 32px;
 }
 
+.locationText {
+	margin-bottom: 16px;
+}
+
 #registerMessage, #loginMessage {
 	color: red;
 	text-align: center;

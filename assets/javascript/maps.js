@@ -286,6 +286,7 @@ function getLocationText(lat, lng) {
 		success: function(r) {
 			var text = r.results[0].formatted_address;
 			setLocationText(text);
+			console.log("Setting location text");
 		},
 		error: function(e) {
 			console.log('ERROR: ', e);
