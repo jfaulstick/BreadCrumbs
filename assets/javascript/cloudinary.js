@@ -30,7 +30,7 @@ $(document).ready(function() {
 		version = data.result.version;
 		id = data.result.public_id;
 		format = data.result.format;
-		url = "https://res.cloudinary.com/" + cloudName + "/image/upload/w_160,h_237/v" + version + "/" + id + "." + format;
+		url = "https://res.cloudinary.com/" + cloudName + "/image/upload/w_180,h_180,c_thumb,r_20/v" + version + "/" + id + "." + format;
 		console.log(data);
 		uploadComplete = true;
 		displayModalImage(id, version, format);

@@ -37,15 +37,20 @@
     <button type="button" class="btn btn-default navbar-right navbar-btn" id="login" data-toggle="modal" data-target="#loginModal">Login</button>
   </div>
 </nav>
+
 <div class="container well" id="mapContainer">
 	<div class="col-xs-12" id="mapDiv">
 		<div id="map"></div>
 	</div>
 </div>
 
-<div class="container" id="mainContent">
+<div class="container well" id="mainContent">
 
 	<div class="container" id="loginScreen">
+
+		<div class="row">
+			<div class="col-xs-12 text-center" id="greetingMessage">Welcome to Breadcrumbs!</div>
+		</div>
 		
 		<!-- This div contains the registration modal -->
 		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
@@ -136,8 +141,6 @@
 	<div class="container" id="itScreen">
 		
 		<div class="col-xs-12">
-			<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
-			<div id="connectedUsersIt"></div>
 			<!-- Div to the existing breadcrumbs -->
 			<div class="crumbContainer">
 				<!-- The list of breadcrumbs -->
@@ -151,6 +154,11 @@
 					<button type="button" class="btn btn-primary btn-lg" id="crumbModalBtn" data-toggle="modal" data-target="#myModal">Add Breadcrumb</button>
 				</div>
 			</div>
+		</div>
+
+		<div class="col-xs-12">
+		<!-- Empty div to populate with a messaging showing the number of connected users minus it-->
+			<div id="connectedUsersIt"></div>
 		</div>
 
 		<!-- Modal for entering Breadcrumb information -->

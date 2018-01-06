@@ -2,6 +2,11 @@ h4 {
 	font-weight: bold;
 }
 
+#mainContent {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
 #cloud-upload {
 	margin-top: 16px;
 }
@@ -19,6 +24,10 @@ h4 {
 	text-align: center;
 }
 
+#user-Logout {
+	margin-right: 0px;
+}
+
 #modalImage {
 	margin: auto;
 	width: 270px;
@@ -28,6 +37,12 @@ h4 {
 #crumbMsg {
 	margin: auto;
 	color: red;
+}
+
+#crumbModalBtn {
+	margin-top: 8px;
+	margin-left: 16px;
+	margin-bottom: 8px;
 }
 
 #headerId {
@@ -57,3 +72,8 @@ button {
 .googleFont {
 	font-family: 'Open Sans', sans-serif;
 } 
+
+.col-xs-2 {
+	padding-left: 0px;
+	padding-right: 0px;
+}

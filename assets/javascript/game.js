@@ -116,7 +116,7 @@ function generateCrumbs() {
 		$(crumb).append(image);
 		$('.breadcrumbList').append(crumb);
 	}
-	$('.crumbImage').css({"height":"237px", "width":"160px"});
+	$('.crumbImage').css({"height":"180px", "width":"180px"});
 }
 
 $('#tagButton').on("click", function() {
